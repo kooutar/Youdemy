@@ -9,7 +9,12 @@
     <title>Youdemy - Dashboard Professeur</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+
 </head>
+
 <body class="bg-[#FFFBE6]">
     <div class="flex">
         <!-- Sidebar -->
@@ -139,13 +144,8 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                 Tag
                             </label>
-                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
-                                <option value="">Sélectionnez une catégorie</option>
-                                <option value="programming">Programmation</option>
-                                <option value="design">Design</option>
-                                <option value="marketing">Marketing</option>
-                                <option value="business">Business</option>
-                            </select>
+                            <input type="text" name="tags" class="some_class_name tagify w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
+                            
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -210,6 +210,15 @@
        function closeModal() {
         document.getElementById('modale').classList.add('hidden');
 }
+
+var input = document.querySelector('input[name="tags"]');
+
+// var input = document.querySelector('input')
+
+new Tagify(input, {
+  whitelist: [1,2,3,4,5],
+  userInput: false
+})
     </script>
 </body>
 </html>
