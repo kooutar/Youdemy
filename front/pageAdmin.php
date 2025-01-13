@@ -44,14 +44,18 @@
             <!-- Chart -->
             <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                 <h3 class="font-bold text-gray-700 mb-4">Inscriptions mensuelles</h3>
-                <canvas id="enrollmentChart" height="100"></canvas>
+                <div class=" flex justify-center gap-4">
+                <button id='ajoutCategorie' class="bg-[#B6FFA1] px-4 py-2 rounded-lg">Ajouter categorie</button>
+                <button id='ajoutTag' class="bg-[#B6FFA1] px-4 py-2 rounded-lg">Ajouter tag</button>  
+                </div>
+                <!-- <canvas id="enrollmentChart" height="100"></canvas> -->
             </div>
 
             <!-- Courses Table -->
             <div class="bg-white rounded-lg shadow-md p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold text-gray-700">Liste des Cours</h3>
-                    <button class="bg-[#B6FFA1] px-4 py-2 rounded-lg">Ajouter un cours</button>
+                    <!-- <button class="bg-[#B6FFA1] px-4 py-2 rounded-lg">Ajouter un cours</button> -->
                 </div>
                 <table class="w-full">
                     <thead>
@@ -80,24 +84,93 @@
         </main>
     </div>
 
+
+    <!-- modale categorie -->
+    <div  id='modale' class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <!-- Modal -->
+        <div class="bg-white rounded-lg w-full max-w-2xl mx-4">
+            <!-- Modal Header -->
+            <div class="border-b p-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Ajouter une nouvelle Catégorie</h3>
+                <button class="text-gray-600 hover:text-gray-800" onclick="closeModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+    <div class="p-6">
+                <form class="space-y-6">
+                    <!-- Titre du cours -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Categorie
+                        </label>
+                        <input 
+                            type="text" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
+                            placeholder="ex: JavaScript pour débutants"
+                        >
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <button type="button" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                                    ➕ Ajouter une Catégorie
+                                </button>
+                        
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modale tag -->
+
+    <div  id='modaletag' class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <!-- Modal -->
+        <div class="bg-white rounded-lg w-full max-w-2xl mx-4">
+            <!-- Modal Header -->
+            <div class="border-b p-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Ajouter une nouvelle Catégorie</h3>
+                <button class="text-gray-600 hover:text-gray-800" onclick="closeModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+                <div class="p-6">
+                <form class="space-y-6">
+                    <!-- Titre du cours -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Categorie
+                        </label>
+                        <input 
+                            type="text" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
+                            placeholder="ex: JavaScript pour débutants"
+                        >
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <button type="button" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                                    + Ajouter une Catégorie
+                                </button>
+                        
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Chart initialization
-        const ctx = document.getElementById('enrollmentChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
-                datasets: [{
-                    label: 'Inscriptions',
-                    data: [65, 78, 90, 85, 95, 110],
-                    borderColor: '#B6FFA1',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
+          let btecetgorie=document.getElementById('ajoutCategorie');
+          let ajoutTag =document.getElementById('ajoutTag');
+          btecetgorie.addEventListener('click',()=>{
+        document.getElementById('modale').classList.remove('hidden');
+       })
+       ajoutTag.addEventListener('click',()=>{
+      document.getElementById('modaletag').classList.remove('hidden');
+       })
+
+       function closeModal() {
+        document.getElementById('modale').classList.add('hidden');
+}
     </script>
 </body>
 </html>

@@ -18,7 +18,8 @@ abstract class user{
         $this->password=$password;
     }
     private function setPassword($password){
-     $this->password=password_hash($password,PASSWORD_BCRYPT);
+     $this->password=password_hash($password,PASSWORD_DEFAULT);
+    // $this->password=$password;  
     }
     public function __get($attribut) {
         
@@ -36,6 +37,8 @@ abstract class user{
     private function  insertion(){
         $db=database::getInstance()->getConnection();
         try {
+            return $this->password;
+
             // if($this->id){
             //   $stmt=$db->prepare("UPDATE user  set  ");
             // }else{
@@ -80,6 +83,19 @@ abstract class user{
         }
     }
 
+    private function  StatusEnAttente($iduser){
+        $db = database::getInstance()->getConnection();
+        try{
+            $stmt=$db->prepare("UPDATE user set status='en attente' where  iduser=?");
+            $stmt->execute([$iduser]);
+            
+          }catch(PDOException $e){
+  
+          }
+    }
+
+  
+
     public static function inscrire($nom,$prenom,$email,$role, $password){
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);// suprimme les caractéres ilegale
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -89,7 +105,14 @@ abstract class user{
         htmlspecialchars(trim($prenom));
         $user=new static($nom,$prenom,$email,$role,$password);
         $user->setPassword($password);
-        $user->insertion();
+        if($role=='Enseignant'){
+         $user->insertion();
+        $user->StatusEnAttente($user->id);
+            
+        }if($role=='etudiant'){
+            $user->insertion();
+        }
+       
         Session::ActiverSession();
         $_SESSION['success'] = "inscription avec success !"; 
         header('location: ../front/connexion.php'); 

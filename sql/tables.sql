@@ -9,23 +9,30 @@ CREATE TABLE user (
     EstActive BOOLEAN -- pour le statut du compte étudiant
 );
 
+
+create table categorie(
+    idcategorie INT PRIMARY KEY AUTO_INCREMENT,
+    categorie varchar(255)
+    
+);
+CREATE TABLE cours (
+    idcours INT PRIMARY KEY AUTO_INCREMENT,
+    titre VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    documentation TEXT,
+    path_vedio VARCHAR(255),
+    idcategorie INT NOT NULL,
+    idEnseignant INT NOT NULL,
+    dateCreation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idcategorie) REFERENCES categorie(idcategorie),
+    FOREIGN KEY (idEnseignant) REFERENCES user(iduser)
+);
+
 create table tag(
     idtag int primary key AUTO_INCREMENT,
     tag varchar(255)
 );
-create table categorie(
-    idcategorie int not null,
-    categorie varchar(255),
-    
-)
-create table cours(
-    idcours int primary key AUTO_INCREMENT,
-    titre varchar(255) NOT NULL,
-    documentation text,
-    path_vedio varchar(255),
-    idcategorie int not null,
-    foreign key idcategorie references categorie(idcategorie)
-);
+
 create table tag_cours(
     idcours int not null,
     idtag int not null,

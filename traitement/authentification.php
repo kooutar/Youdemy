@@ -1,5 +1,6 @@
 <?php
 require_once '../classes/etudiant.php';
+require_once '../classes/Enseignant.php';
 if(isset($_POST['inscrire'])){
     if($_POST['role']=='etudiant'){
             $etudiant = new Etudiant($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['role'],$_POST['password']);
@@ -7,6 +8,9 @@ if(isset($_POST['inscrire'])){
        
     }else{
         // traitement prof
+        $Enseignant=new Enseignant($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['role'],$_POST['password']);
+        $Enseignant::inscrire($Enseignant->nom,$Enseignant->prenom,$Enseignant->email,$Enseignant->role,$Enseignant->password);
+        // die();
     } 
    
 }
@@ -16,6 +20,11 @@ if(isset($_POST['connecter'])){
    if($role){
      if($role=='etudiant'){
          Etudiant::login($_POST['email'],$_POST['password']);
+     }
+     if($role =='Enseignant' ){
+        Enseignant::login($_POST['email'],$_POST['password']);
+     }else{
+        echo " compte n'est pas active";
      }
    }
 }
