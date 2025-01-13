@@ -7,7 +7,16 @@ if(isset($_POST['inscrire'])){
        
     }else{
         // traitement prof
-    }
-    
+    } 
    
 }
+
+if(isset($_POST['connecter'])){
+   $role= user::RoleMail($_POST['email']);
+   if($role){
+     if($role=='etudiant'){
+         Etudiant::login($_POST['email'],$_POST['password']);
+     }
+   }
+}
+

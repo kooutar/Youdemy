@@ -64,6 +64,22 @@ abstract class user{
         }
     }
 
+    public static function RoleMail($email){
+        $db = database::getInstance()->getConnection();
+        try{
+          $stmt=$db->prepare("SELECT role from user where email=? ");
+          if($stmt->execute([$email])){
+            $result=$stmt->fetch();
+            return $result['role'];
+          }else{
+            return false;
+          }
+          
+        }catch(PDOException $e){
+
+        }
+    }
+
     public static function inscrire($nom,$prenom,$email,$role, $password){
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);// suprimme les caractéres ilegale
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

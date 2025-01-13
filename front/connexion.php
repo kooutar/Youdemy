@@ -13,7 +13,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold">EduLearn</a>
+                    <a href="index.html" class="text-2xl font-bold">Youdemy</a>
                 </div>
             </div>
         </div>
@@ -22,11 +22,12 @@
 <div class="p-4">
 <div class="bg-white rounded-2xl shadow-xl p-8">
                 <h2 class="text-3xl font-bold mb-8 text-center">Connexion</h2>
-                <form class="space-y-6">
+                <form class="space-y-6" action="../traitement/authentification.php" method="POST">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                         <input 
                             type="email" 
+                            name="email"
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]"
                             placeholder="votre@email.com"
                             required
@@ -36,6 +37,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
                         <input 
                             type="password" 
+                            name="password"
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]"
                             placeholder="••••••••"
                             required
@@ -50,6 +52,7 @@
                     </div>
                     <button 
                         type="submit" 
+                        name="connecter"
                         class="w-full py-3 px-4 bg-[#B6FFA1] hover:bg-green-200 rounded-lg text-black font-medium transition-colors duration-200"
                     >
                         Se connecter
@@ -74,18 +77,18 @@
 require_once '../classes/session.php';
 Session::ActiverSession();
 if (isset($_SESSION['success'])) {
-    $errorMessage = $_SESSION['success'];
+    $Message = $_SESSION['success'];
     echo "
         <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'success',
-                text: '$errorMessage',
+                text: '$Message',
                 confirmButtonText: 'OK',
                 timer: 5000
             });
         </script>
     ";
-    unset($_SESSION['success']); // Supprimer le message après affichage
+    unset($_SESSION['success']); 
 }
