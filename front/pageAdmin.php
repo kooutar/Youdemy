@@ -30,6 +30,8 @@ if (isset($_SESSION['success'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 </head>
 <body class="bg-[#FFFBE6]">
     <div class="flex">
@@ -69,7 +71,7 @@ if (isset($_SESSION['success'])) {
                 <h3 class="font-bold text-gray-700 mb-4">Inscriptions mensuelles</h3>
                 <div class=" flex justify-center gap-4">
                 <button id='ajoutCategorie' class="bg-[#B6FFA1] px-4 py-2 rounded-lg">Ajouter categorie</button>
-                <button id='ajoutTag' class="bg-[#B6FFA1] px-4 py-2 rounded-lg">Ajouter tag</button>  
+                <button  id="ajoutTag" class="bg-[#B6FFA1] px-4 py-2 rounded-lg" >Ajouter tag</button>  
                 </div>
                 <!-- <canvas id="enrollmentChart" height="100"></canvas> -->
             </div>
@@ -106,8 +108,43 @@ if (isset($_SESSION['success'])) {
             </div>
         </main>
     </div>
-
-
+ <!-- modale tag -->
+    <div  id='modaletag' class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <!-- Modal -->
+        <div class="bg-white rounded-lg w-full max-w-2xl mx-4">
+            <!-- Modal Header -->
+            <div class="border-b p-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Ajouter un nouveau tag </h3>
+                <button class="text-gray-600 hover:text-gray-800" onclick="closeModal2()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+                <div class="p-6">
+                <form class="space-y-6" action="../traitement/traitementCategorie.php" method="POST">
+                    <!-- Titre du cours -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            tag
+                        </label>
+                        <input 
+                            type="text"
+                            name="tags"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
+                            placeholder="ex: JavaScript pour débutants"
+                            require
+                        >
+                    </div>
+                   
+                                <button type="submit" name="ajoutCategorie" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                                    + Ajouter tags
+                                </button>
+                        
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- modale categorie -->
     <div  id='modale' class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
         <!-- Modal -->
@@ -121,7 +158,7 @@ if (isset($_SESSION['success'])) {
                     </svg>
                 </button>
             </div>
-    <div class="p-6">
+                <div class="p-6">
                 <form class="space-y-6" action="../traitement/traitementCategorie.php" method="POST">
                     <!-- Titre du cours -->
                     <div>
@@ -145,44 +182,9 @@ if (isset($_SESSION['success'])) {
         </div>
     </div>
 
-    <!-- modale tag -->
+   
 
-    <div  id='modaletag' class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <!-- Modal -->
-        <div class="bg-white rounded-lg w-full max-w-2xl mx-4">
-            <!-- Modal Header -->
-            <div class="border-b p-4 flex justify-between items-center">
-                <h3 class="text-xl font-bold text-gray-800">Ajouter une nouvelle Catégorie</h3>
-                <button class="text-gray-600 hover:text-gray-800" onclick="closeModal()">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-                <div class="p-6">
-                <form class="space-y-6" action="../traitement/traitementCategorie.php" method="POST">
-                    <!-- Titre du cours -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Categorie
-                        </label>
-                        <input 
-                            type="text"
-                            name="categorie"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
-                            placeholder="ex: JavaScript pour débutants"
-                            require
-                        >
-                    </div>
-                   
-                                <button type="submit" name="ajoutCategorie" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
-                                    + Ajouter une Catégorie
-                                </button>
-                        
-                </form>
-            </div>
-        </div>
-    </div>
+   
 
     <script>
           let btecetgorie=document.getElementById('ajoutCategorie');
@@ -190,6 +192,8 @@ if (isset($_SESSION['success'])) {
           btecetgorie.addEventListener('click',()=>{
         document.getElementById('modale').classList.remove('hidden');
        })
+
+
        ajoutTag.addEventListener('click',()=>{
       document.getElementById('modaletag').classList.remove('hidden');
        })
@@ -197,6 +201,15 @@ if (isset($_SESSION['success'])) {
        function closeModal() {
         document.getElementById('modale').classList.add('hidden');
 }
+
+function closeModal2() {
+    document.getElementById('modaletag').classList.add('hidden');
+}
+
+var input = document.querySelector('input[name=tags]');
+
+// initialize Tagify on the above input node reference
+new Tagify(input)
     </script>
 </body>
 </html>
