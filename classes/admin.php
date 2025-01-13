@@ -38,7 +38,10 @@ class admin extends user{
 
    public function ajouterCategorie($categorie){
       $categorie=categorie::inserCategorie($categorie);
-      
+        Session::ActiverSession();
+        $_SESSION['success'] = "ajoute de categorie avec success !"; 
+      header('location: ../front/pageAdmin.php');
+      exit();
    }
 
 }

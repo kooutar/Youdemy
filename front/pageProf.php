@@ -1,3 +1,6 @@
+<?php 
+ require_once '../classes/categorie.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -149,11 +152,18 @@
                                 Catégorie
                             </label>
                             <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
-                                <option value="">Sélectionnez une catégorie</option>
-                                <option value="programming">Programmation</option>
-                                <option value="design">Design</option>
-                                <option value="marketing">Marketing</option>
-                                <option value="business">Business</option>
+                                <?php 
+                              $categories=categorie::affichecategorie();
+                              if (!empty($categories)) {
+                                foreach ($categories as $cat) {
+                                    echo "<option value='{$cat['id']}'>{$cat['categorie']}</option>";
+                                }
+                            } else {
+                                echo "<option disabled>Aucune catégorie disponible</option>";
+                            }
+                                ?>
+
+                               
                             </select>
                         </div>
                     </div>
