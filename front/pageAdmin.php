@@ -99,7 +99,7 @@
                 </button>
             </div>
     <div class="p-6">
-                <form class="space-y-6">
+                <form class="space-y-6" action="../traitement/traitementCategorie.php" method="POST">
                     <!-- Titre du cours -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -107,12 +107,13 @@
                         </label>
                         <input 
                             type="text" 
+                            name="categorie"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
                             placeholder="ex: JavaScript pour débutants"
                         >
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <button type="button" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                                <button name="ajoutCategorie" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
                                     ➕ Ajouter une Catégorie
                                 </button>
                         
@@ -136,20 +137,22 @@
                 </button>
             </div>
                 <div class="p-6">
-                <form class="space-y-6">
+                <form class="space-y-6" action="../traitement/traitementCategorie.php" method="POST">
                     <!-- Titre du cours -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Categorie
                         </label>
                         <input 
-                            type="text" 
+                            type="text"
+                            name="categorie"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
                             placeholder="ex: JavaScript pour débutants"
+                            require
                         >
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <button type="button" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                   
+                                <button type="submit" name="ajoutCategorie" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
                                     + Ajouter une Catégorie
                                 </button>
                         

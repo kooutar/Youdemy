@@ -8,9 +8,9 @@ require_once 'session.php';
          try{
             $stmt=$db->prepare("SELECT * From user where email=? ");
             if($stmt->execute([$Email])){
-                $result = $stmt->fetch();
+                $result = $stmt->fetch();    
                 if(password_verify($password,$result['password'])){
-                     Session::validateSession($result['iduser'],$result['role']); 
+                     Session::validateSession($result); 
                      header('location: ../front/pageClient.php');
                      exit();
                 }

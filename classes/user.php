@@ -37,16 +37,12 @@ abstract class user{
     private function  insertion(){
         $db=database::getInstance()->getConnection();
         try {
-            return $this->password;
-
-            // if($this->id){
-            //   $stmt=$db->prepare("UPDATE user  set  ");
-            // }else{
+            
                 $stmt=$db->prepare("INSERT INTO user(nom, prenom, email, password, role)
                                     Value(?,?,?,?,?)");
                 $stmt->execute([$this->nom,$this->prenom,$this->email,$this->password,$this->role]);
                 $this->id=$db->lastInsertId();
-            // }
+          
 
 
         } catch (PDOException $e) {
@@ -108,15 +104,19 @@ abstract class user{
         if($role=='Enseignant'){
          $user->insertion();
         $user->StatusEnAttente($user->id);
-            
-        }if($role=='etudiant'){
-            $user->insertion();
-        }
-       
         Session::ActiverSession();
         $_SESSION['success'] = "inscription avec success !"; 
         header('location: ../front/connexion.php'); 
         exit();
+        }if($role=='etudiant'){
+            $user->insertion();
+            Session::ActiverSession();
+            $_SESSION['success'] = "inscription avec success !"; 
+            header('location: ../front/connexion.php'); 
+            exit();
+        }
+       
+       
 
     }
 }

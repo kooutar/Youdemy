@@ -5,17 +5,23 @@ class Session {
             session_start();
         }
     }
-    public static function validateSession($id, $role) {
+    public static function validateSession($userData) {
            Session::ActiverSession();
-            $_SESSION['iduser']=$id;
-            $_SESSION['role']=$role;
-        
-
-        if (!isset($_SESSION['iduser']) || !isset($_SESSION['role']) ) {
-            throw new Exception("utilisateur no connecté");
+           if (!$userData) {
+            throw new Exception("Aucune donnée utilisateur trouvée.");
         }
+    
+        // Stocker toutes les informations utilisateur dans la session
+        $_SESSION['userData'] = $userData;
+    
+        // Vérifier si la session est correctement configurée
+        if (empty($_SESSION['userData'])) {
+            throw new Exception("Utilisateur non connecté.");
+        }
+    
+        return $_SESSION['userData'];
+    
 
-        return $_SESSION['iduser'];
     }
 
  public function destroySession(){

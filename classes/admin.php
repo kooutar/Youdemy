@@ -10,8 +10,9 @@ class admin extends user{
            $stmt=$db->prepare("SELECT * From user where email=? ");
            if($stmt->execute([$Email])){
                $result = $stmt->fetch();
+
                if(password_verify($password,$result['password'])){
-                    Session::validateSession($result['iduser'],$result['role']); 
+                    Session::validateSession($result); 
                     header('location: ../front/pageAdmin.php');
                     exit();
                }
@@ -36,9 +37,8 @@ class admin extends user{
    }
 
    public function ajouterCategorie($categorie){
+      $categorie=categorie::inserCategorie($categorie);
       
-
-
    }
 
 }
