@@ -55,6 +55,16 @@ class Enseignant extends user{
 
    public  function getstatus(){ return $this->status;}
 
+
+   public function ajouterCours(cours $cours,$idcategorie, $idProf){
+     if($cours instanceof coursVedio){
+        coursVedio::createCours($cours->idcours,$cours->titre,$cours->description,$cours->getvedio(),$idcategorie,$idProf);
+     }
+     if($cours instanceof coursDocument){
+        coursDocument::createCours($cours->idcours,$cours->titre,$cours->description,$cours->getdocumentation(),$idcategorie,$idProf) ;
+     }
+   }
+
    
 
 

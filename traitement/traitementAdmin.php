@@ -1,7 +1,7 @@
 <?php
 require_once '../autoload.php';
 session::ActiverSession();
-$admin=new admin($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_SESSION['userData']['email'],$_SESSION['userData']['role']);
+$admin=new admin($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_SESSION['userData']['email'],$_SESSION['userData']['role'],null);
 if(isset($_POST['ajoutCategorie'])){
      
       $admin->ajouterCategorie($_POST['categorie']);
