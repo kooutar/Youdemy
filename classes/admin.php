@@ -1,7 +1,5 @@
 <?php 
-require_once 'db.php';
-require_once 'user.php';
-require_once 'categorie.php';
+require_once '../autoload.php';
 class admin extends user{
 
     public static function login($Email,$password){
@@ -42,6 +40,14 @@ class admin extends user{
         $_SESSION['success'] = "ajoute de categorie avec success !"; 
       header('location: ../front/pageAdmin.php');
       exit();
+   }
+
+   public function ajouterag($tag){
+    $tag= tag::insertTag($tag);
+    Session::ActiverSession();
+    $_SESSION['success']="Ajoute de Tag avec success !";
+    header('location: ../front/pageAdmin.php');
+    exit();
    }
 
 }

@@ -213,12 +213,19 @@
 
 var input = document.querySelector('input[name="tags"]');
 
-// var input = document.querySelector('input')
-
-new Tagify(input, {
-  whitelist: [1,2,3,4,5],
-  userInput: false
+fetch('../traitement/fetchtag.php')
+.then(response => response.json())
+.then(tags => {
+  // Initialiser Tagify avec les tags récupérés
+  new Tagify(input, {
+    whitelist: tags, // Liste dynamique
+    userInput: false // Empêche l'utilisateur d'ajouter des tags non autorisés
+  });
 })
+.catch(error => {
+  console.error('Erreur lors de la récupération des tags :', error);
+});
     </script>
+   
 </body>
 </html>

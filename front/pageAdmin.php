@@ -28,9 +28,9 @@ if (isset($_SESSION['success'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youdemy - Dashboard Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 </head>
 <body class="bg-[#FFFBE6]">
@@ -122,7 +122,7 @@ if (isset($_SESSION['success'])) {
                 </button>
             </div>
                 <div class="p-6">
-                <form class="space-y-6" action="../traitement/traitementCategorie.php" method="POST">
+                <form class="space-y-6" action="../traitement/traitementAdmin.php" method="POST">
                     <!-- Titre du cours -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -137,7 +137,7 @@ if (isset($_SESSION['success'])) {
                         >
                     </div>
                    
-                                <button type="submit" name="ajoutCategorie" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                                <button type="submit" name="ajoutTag" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
                                     + Ajouter tags
                                 </button>
                         
@@ -159,7 +159,7 @@ if (isset($_SESSION['success'])) {
                 </button>
             </div>
                 <div class="p-6">
-                <form class="space-y-6" action="../traitement/traitementCategorie.php" method="POST">
+                <form class="space-y-6" action="../traitement/traitementAdmin.php" method="POST">
                     <!-- Titre du cours -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -209,7 +209,10 @@ function closeModal2() {
 var input = document.querySelector('input[name=tags]');
 
 // initialize Tagify on the above input node reference
-new Tagify(input)
+new Tagify(input,{
+    delimiters: ", ", // Sépare les tags avec des virgules
+    maxTags: 5,  
+})
     </script>
 </body>
 </html>
