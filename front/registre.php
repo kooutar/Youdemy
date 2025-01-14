@@ -1,3 +1,24 @@
+<?php
+require_once '../classes/session.php';
+session::ActiverSession();
+if (isset($_SESSION['error'])) {
+    $Message = $_SESSION['error'];
+    echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'error',
+                text: '$Message',
+                confirmButtonText: 'OK',
+                timer: 5000
+            });
+        </script>
+    ";
+    unset($_SESSION['error']); 
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -116,22 +137,3 @@
 </body>
 </html>
 
-<?php
-require_once '../classes/session.php';
-session::ActiverSession();
-if (isset($_SESSION['error'])) {
-    $Message = $_SESSION['error'];
-    echo "
-        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'error',
-                text: '$Message',
-                confirmButtonText: 'OK',
-                timer: 5000
-            });
-        </script>
-    ";
-    unset($_SESSION['error']); 
-}

@@ -8,7 +8,7 @@ abstract class user{
     protected $email;
     protected $password;
     protected $role;
-    function __construct($nom,$prenom,$email,$role,$id=null,$password=null)
+    function __construct($nom,$prenom,$email,$role,$id,$password=null)
     {
         $this->id=$id;
         $this->nom=$nom;
@@ -16,9 +16,10 @@ abstract class user{
         $this->email=$email;
         $this->role=$role;
         $this->password=$password;
+       
     }
     private function setPassword($password){
-     $this->password=password_hash($password,PASSWORD_DEFAULT);
+     $this->password=password_hash($password,PASSWORD_BCRYPT);
     // $this->password=$password;  
     }
     public function __get($attribut) {
@@ -63,21 +64,27 @@ abstract class user{
         }
     }
 
-    public static function RoleMail($email){
+    public static function RoleMail($email) {
         $db = database::getInstance()->getConnection();
-        try{
-          $stmt=$db->prepare("SELECT role from user where email=? ");
-          if($stmt->execute([$email])){
-            $result=$stmt->fetch();
-            return $result['role'];
-          }else{
+        try {
+            $stmt = $db->prepare("SELECT role FROM user WHERE email=?");
+            if ($stmt->execute([$email])) {
+                $result = $stmt->fetch();
+                if ($result) {
+                    return $result['role'];
+                } else {
+                    // No user found, return false or handle accordingly
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            // Optionally log the exception or handle the error
             return false;
-          }
-          
-        }catch(PDOException $e){
-
         }
     }
+    
 
     private function  StatusEnAttente($iduser){
         $db = database::getInstance()->getConnection();
@@ -99,7 +106,7 @@ abstract class user{
         }
         htmlspecialchars(trim($nom));
         htmlspecialchars(trim($prenom));
-        $user=new static($nom,$prenom,$email,$role,$password);
+        $user=new static($nom,$prenom,$email,$role,null,$password);
         $user->setPassword($password);
         if($role=='Enseignant'){
          $user->insertion();
