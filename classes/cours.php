@@ -1,6 +1,6 @@
 <?php
 require_once 'db.php';
- class cours{
+ abstract class  cours{
   protected $idcours;
   protected $titre;
   protected $description;
@@ -12,16 +12,10 @@ require_once 'db.php';
     $this->description=$description;
   }
 
-  // public static function insertCours($titre,$description,$idcategorie,$idEnseignant,$documentation=null,$path_vedio=null){
-  //   $db=database::getInstance()->getConnection();
-  //   try {
-  //      $stmt=$db->prepare("INSERT INTO cours(titre,description,idcategorie,idEnseignant,documentation,path_vedio) value(?,?,?,?,?,?) ");
-  //      $stmt->execute([$titre,$description,$idcategorie,$idEnseignant,$documentation,$path_vedio]);
-       
-  //   } catch (PDOException $e) {
-  //      $e->getMessage();
-  //   }
-  // }
+  abstract  public static function createCours($id,$titre,$description,$documentation,$vedio,$idcategorie,$idEnseignant);
+ 
+
+ 
 
     public function __get($attribut) {
         

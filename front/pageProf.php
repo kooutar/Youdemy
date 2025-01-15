@@ -25,7 +25,7 @@
             <nav class="mt-4">
                 <a href="#dashboard" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Tableau de bord</a>
                 <a href="#courses" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Mes cours</a>
-                <a href="#students" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Mes étudiants</a>
+                <a href="#students" onclick="showSection('sectionMesEtudiant')" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Mes étudiants</a>
                 <a href="#earnings" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Mes gains</a>
             </nav>
         </aside>
@@ -49,7 +49,7 @@
             </div>
 
             <!-- My Courses -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="section bg-white rounded-lg shadow-md p-6 mb-8">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold text-gray-700">Mes Cours</h3>
                     <button id="bteAjoutCours" class="bg-[#B6FFA1] px-4 py-2 rounded-lg">Nouveau cours</button>
@@ -80,7 +80,7 @@
             </div>
 
             <!-- Students List -->
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="section bg-white rounded-lg shadow-md p-6">
                 <h3 class="font-bold text-gray-700 mb-4">Derniers étudiants inscrits</h3>
                 <div class="space-y-4">
                     <div class="flex items-center justify-between border-b pb-2">
@@ -97,6 +97,31 @@
             </div>
         </main>
     </div>
+  <!-- section    -->
+ <section id='sectionMesEtudiant' class="section hidden">
+
+ <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="font-bold text-gray-700 mb-4">Derniers étudiants inscrits</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div class="flex items-center">
+                            <img src="/api/placeholder/40/40" class="rounded-full" alt="Student">
+                            <div class="ml-4">
+                                <p class="font-semibold">Marie Lambert</p>
+                                <p class="text-sm text-gray-600">Python pour débutants</p>
+                            </div>
+                        </div>
+                        <button class="text-blue-500">Contacter</button>
+                    </div>
+                </div>
+            </div>
+  
+ </section>
+  
+
+
+
+
 
     <div id='modale' class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <!-- Modal -->
@@ -113,7 +138,7 @@
 
         <!-- Modal Body -->
         <div class="p-6">
-            <form class="space-y-6">
+            <form class="space-y-6" action="../traitement/traitementProf.php" method="POST" enctype="multipart/form-data">
                 <!-- Titre du cours -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -121,6 +146,7 @@
                     </label>
                     <input 
                         type="text" 
+                        name="titre"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
                         placeholder="ex: JavaScript pour débutants"
                     >
@@ -132,6 +158,7 @@
                         Description
                     </label>
                     <textarea 
+                       name="description"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
                         rows="2"
                         placeholder="Décrivez le contenu de votre cours..."
@@ -150,13 +177,13 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Catégorie
                         </label>
-                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
-                            <!-- PHP logic for categories -->
+                        <select name="categorie" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
+                           
                             <?php 
                             $categories = categorie::affichecategorie();
                             if (!empty($categories)) {
                                 foreach ($categories as $cat) {
-                                    echo "<option value='{$cat['id']}'>{$cat['categorie']}</option>";
+                                    echo "<option value='{$cat['idcategorie']}'>{$cat['categorie']}</option>";
                                 }
                             } else {
                                 echo "<option disabled>Aucune catégorie disponible</option>";
@@ -179,12 +206,12 @@
                             <div class="flex text-sm text-gray-600">
                                 <label class="relative cursor-pointer bg-white rounded-md font-medium text-[#B6FFA1] hover:text-green-600">
                                     <span>Télécharger un fichier</span>
-                                    <input type="file" class="sr-only">
+                                    <input type="file" class="sr-only" name="vedio">
                                 </label>
                                 <p class="pl-1">ou glisser-déposer</p>
                             </div>
                             <p class="text-xs text-gray-500">
-                                PNG, JPG, GIF jusqu'à 10MB
+                                MP4, MOV, AVI jusqu'à 10MB
                             </p>
                         </div>
                     </div>
@@ -199,8 +226,8 @@
                         <select onchange="afficherChamps()" id="typeCours" name="typeCours"   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
                             <!-- PHP logic for categories -->
                             <option value="">Choisir...</option>
-                    <option value="enLigne"> avec vedio</option>
-                    <option value="enPresentiel">avec documentation</option>
+                    <option value="vedio"> avec vedio</option>
+                    <option value="document">avec documentation</option>
                         </select>
                     </div>
                     <div id="divUrl" style="display:none;">
@@ -215,14 +242,10 @@
                 </div>
                 </div>
 
-                <!-- Type de cours -->
-
-
-                <!-- Champ spécifique pour les cours en ligne -->
-               
+              
 
                 <!-- Sections du cours -->
-                <button type="button" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                <button name="ajoutCours" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
                     + Ajouter une leçon
                 </button>
             </form>
@@ -238,39 +261,41 @@
 
        function closeModal() {
         document.getElementById('modale').classList.add('hidden');
-}
+        }
 
 var input = document.querySelector('input[name="tags"]');
 
 fetch('../traitement/fetchtag.php')
 .then(response => response.json())
 .then(tags => {
-  // Initialiser Tagify avec les tags récupérés
   new Tagify(input, {
-    whitelist: tags, // Liste dynamique
-    userInput: false // Empêche l'utilisateur d'ajouter des tags non autorisés
+    whitelist: tags, 
+    userInput: false 
   });
 })
 .catch(error => {
   console.error('Erreur lors de la récupération des tags :', error);
 });
-
 function afficherChamps() {
             var typeCours = document.getElementById('typeCours').value;
             var divUrl = document.getElementById('divUrl');
             var divLieu = document.getElementById('divLieu');
-            
-            // Cache tous les champs
             divUrl.style.display = 'none';
             divLieu.style.display = 'none';
-
-            // Affiche les champs en fonction du type de cours
-            if (typeCours === 'enLigne') {
+            if (typeCours === 'vedio') {
                 divUrl.style.display = 'block';
-            } else if (typeCours === 'enPresentiel') {
+            } else if (typeCours === 'document') {
                 divLieu.style.display = 'block';
             }
         }
+
+        // ********************************
+        // function showSection(sectionId) {
+        //     document.querySelectorAll('.section').forEach(section => {
+        //         section.classList.add('hidden');
+        //     });
+        //     document.getElementById(sectionId).classList.remove('hidden');
+        // }
     </script>
    
 </body>

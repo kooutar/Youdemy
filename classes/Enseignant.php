@@ -29,13 +29,13 @@ class Enseignant extends user{
                $result = $stmt->fetch();
                
                if(password_verify($password,$result['password'])){
-                    Session::validateSession($result['iduser'],$result['role']); 
+                    Session::validateSession($result); 
                     header('location: ../front/pageProf.php');
                     exit();
                }
                else{
                    Session::ActiverSession();
-                   $_SESSION['error'] = "Mot de passe incorrect abiiiiiiiiiiiiiiiiiiiid !"; 
+                   $_SESSION['error'] = "Mot de passe incorrect !"; 
                    header('location: ../front/connexion.php'); 
                    exit();
                }
@@ -46,7 +46,7 @@ class Enseignant extends user{
                exit();
            }
           
-           
+             
           
         } catch(PDOException $e){
            
@@ -56,14 +56,24 @@ class Enseignant extends user{
    public  function getstatus(){ return $this->status;}
 
 
-   public function ajouterCours(cours $cours,$idcategorie, $idProf){
-     if($cours instanceof coursVedio){
-        coursVedio::createCours($cours->idcours,$cours->titre,$cours->description,$cours->getvedio(),$idcategorie,$idProf);
-     }
-     if($cours instanceof coursDocument){
-        coursDocument::createCours($cours->idcours,$cours->titre,$cours->description,$cours->getdocumentation(),$idcategorie,$idProf) ;
-     }
-   }
+   public function ajouterCours(cours $cours, $idcategorie) {
+    if ($cours instanceof coursVedio) {
+        $result = coursVedio::createCours($cours->idcours, $cours->titre, $cours->description, null,$cours->getvedio(), $idcategorie, $this->id);
+        if (!$result) {
+            return "Erreur lors de la création du cours vidéo";
+        }
+        return $result;
+    }
+    if ($cours instanceof coursDocument) {
+        $result = coursDocument::createCours($cours->idcours, $cours->titre, $cours->description, $cours->getdocumentation(), $idcategorie, $this->id);
+        if (!$result) {
+            return "Erreur lors de la création du cours document";
+        }
+        return $result;
+    }
+    return "Type de cours non pris en charge";
+}
+
 
    
 

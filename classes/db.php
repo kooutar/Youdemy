@@ -1,11 +1,11 @@
 <?php
 
 class database {
-    private static ?database $instance = null; // Singleton instance de la classe database
-    private PDO $connection; // Connexion PDO
+    private static ?database $instance = null; 
+    private PDO $connection; 
 
     private function __construct() {
-        // Configuration de la connexion PDO
+        
         $dsn = 'mysql:host=localhost;dbname=Youdemy';
         $username = 'root';
         $password = '';
@@ -25,15 +25,15 @@ class database {
         }
     }
 
-    // Méthode pour obtenir l'instance unique de la classe database
+   
     public static function getInstance(): database {
         if (self::$instance === null) {
-            self::$instance = new self(); // Crée une nouvelle instance de la classe database
+            self::$instance = new self();
         }
         return self::$instance;
     }
 
-    // Méthode pour obtenir l'objet PDO
+
     public function getConnection(): PDO {
         return $this->connection;
     }
