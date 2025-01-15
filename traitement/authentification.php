@@ -1,15 +1,17 @@
 <?php
 require_once '../autoload.php';
 if(isset($_POST['inscrire'])){
-    if($_POST['role']=='etudiant'){
-            $etudiant = new Etudiant($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['role'],null,$_POST['password']);
+    var_dump($_POST['role']);
+    if($_POST['role']=='1'){
+            $etudiant = new Etudiant($_POST['nom'],$_POST['prenom'],$_POST['email'],1,null,$_POST['password']);
             $etudiant::inscrire($etudiant->nom,$etudiant->prenom,$etudiant->email,$etudiant->role,$etudiant->password);
        
     }else{
-        // traitement prof
-        $Enseignant=new Enseignant($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['role'],null,$_POST['password']);
+        // // traitement prof
+        $Enseignant=new Enseignant($_POST['nom'],$_POST['prenom'],$_POST['email'],2,null,$_POST['password']);
         $Enseignant::inscrire($Enseignant->nom,$Enseignant->prenom,$Enseignant->email,$Enseignant->role,$Enseignant->password);
         // die();
+        
     } 
    
 }

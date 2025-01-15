@@ -100,9 +100,9 @@ if (isset($_SESSION['error'])) {
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
-                        <select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]">
-                            <option value="etudiant">Étudiant</option>
-                            <option value="Enseignant">Enseignant</option>
+                        <select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]" require>
+                            <option value="1">Étudiant</option>
+                            <option value="2">Enseignant</option>
                         </select>
                     </div>
                     <div class="flex items-center">

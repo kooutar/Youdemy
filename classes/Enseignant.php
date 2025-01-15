@@ -65,7 +65,7 @@ class Enseignant extends user{
         return $result;
     }
     if ($cours instanceof coursDocument) {
-        $result = coursDocument::createCours($cours->idcours, $cours->titre, $cours->description, $cours->getdocumentation(), $idcategorie, $this->id);
+        $result = coursDocument::createCours($cours->idcours, $cours->titre, $cours->description, $cours->getdocumentation(),null, $idcategorie, $this->id);
         if (!$result) {
             return "Erreur lors de la création du cours document";
         }

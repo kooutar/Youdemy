@@ -108,14 +108,14 @@ abstract class user{
         htmlspecialchars(trim($prenom));
         $user=new static($nom,$prenom,$email,$role,null,$password);
         $user->setPassword($password);
-        if($role=='Enseignant'){
+        if($role=='2'){
          $user->insertion();
         $user->StatusEnAttente($user->id);
         Session::ActiverSession();
         $_SESSION['success'] = "inscription avec success !"; 
         header('location: ../front/connexion.php'); 
         exit();
-        }if($role=='etudiant'){
+        }if($role=='1'){
             $user->insertion();
             Session::ActiverSession();
             $_SESSION['success'] = "inscription avec success !"; 
