@@ -59,7 +59,7 @@
                         <!-- Sample data - Replace with PHP loop -->
                          <?php
                              require_once '../traitement/traitementProf.php';
-                           foreach($coursVideo as $cours){
+                           foreach($coursVedio as $cours){
                             ?>
                            
                         <tr class="border-b">
@@ -68,7 +68,7 @@
                             </td>
                             
                             <td class="px-4 py-3"><?= $cours->titre?></td>
-                            <td class="px-4 py-3">Programmation</td>
+                            <td class="px-4 py-3"><?= $cours->categorie->getCategorie()?></td>
                             <td class="px-4 py-3">Vidéo</td>
                             <td class="px-4 py-3">32</td>
                             <td class="px-4 py-3">2024-01-15</td>
@@ -103,16 +103,17 @@
                     </thead>
                     <tbody>
                         <!-- Sample data - Replace with PHP loop -->
+                        <?php
+                             require_once '../traitement/traitementProf.php';
+                             foreach($coursDocument as $cours){
+                            ?>
                         <tr class="border-b">
                             <td class="px-4 py-3">
-                                <img src="/api/placeholder/40/40" alt="Course" class="rounded-lg w-10 h-10 object-cover">
+                                <img src="<?=$cours->image?>" alt="Course" class="rounded-lg w-10 h-10 object-cover">
                             </td>
-                            <?php
-                             require_once '../traitement/traitementProf.php';
-                            //  $prof->consulterMesCours($etat);
-                            ?>
-                            <td class="px-4 py-3">Python pour débutants</td>
-                            <td class="px-4 py-3">Programmation</td>
+                           
+                            <td class="px-4 py-3"><?= $cours->titre?></td>
+                            <td class="px-4 py-3"><?= $cours->categorie->getCategorie()?></td>
                             <td class="px-4 py-3">Vidéo</td>
                             <td class="px-4 py-3">32</td>
                             <td class="px-4 py-3">2024-01-15</td>
@@ -124,6 +125,9 @@
                                 <button class="text-red-500 hover:text-red-700">Supprimer</button>
                             </td>
                         </tr>
+                        <?php 
+                           }
+                            ?>
                     </tbody>
                 </table>
             </div>

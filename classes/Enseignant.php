@@ -45,9 +45,6 @@ class Enseignant extends user{
                header('location: ../front/connexion.php'); 
                exit();
            }
-          
-             
-          
         } catch(PDOException $e){
            
         }
@@ -81,18 +78,6 @@ public function consulterMesCours(cours $cours){
        if($cours instanceof coursDocument){
         return coursDocument::getAllCours($this->id);
        }
-}
-
-
-
-
-
-   
-
-
-   
-
-
-   
+}  
 }
 

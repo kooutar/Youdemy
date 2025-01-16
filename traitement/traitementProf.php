@@ -32,15 +32,15 @@ if(isset($_POST['ajoutCours'])){
 
 $cours=new coursVedio(null,null,null,null,null);
 $cours->setProfessor($prof);
-var_dump($cours->prof);
-// Obtenir les cours vidéo
-// $coursVideo = $prof->consulterMesCours(new coursVedio(null,null,null,null,null,null));
-//  foreach($coursVideo as $cours){
-//    var_dump($cours);
-//  }
-//    // Accédez à la propriété "titre"
-
-// Obtenir les cours document
+$coursVedio= $prof->consulterMesCours($cours);
+// foreach($coursVedio as $cours){
+//     var_dump($cours);
+// }
+// ****************
+$cours=new coursDocument(null,null,null,null,null);
+$cours->setProfessor($prof);
+$coursDocument= $prof->consulterMesCours($cours);
+//  print_r($coursDocument);
 
 
 

@@ -16,6 +16,7 @@ require_once 'categorie.php';
     $this->titre=$titre;
     $this->description=$description;
     $this->image=$image;
+   
   }
   
   public static function validateImage($imagename,$imageTmp){

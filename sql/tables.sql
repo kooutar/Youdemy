@@ -53,8 +53,10 @@ create table tag_cours(
     primary key(idcours,idtag)
 );
 
-CREATE VIEW vuecours AS
-SELECT c.*, cat.categorie
+CREATE Or replace VIEW vuecours AS
+SELECT c.idcours,c.titre,c.description,c.path_image,c.documentation,c.path_vedio, cat.categorie, prof.*
 FROM cours c
 INNER JOIN categorie cat
-ON c.idcategorie = cat.idcategorie;
+ON c.idcategorie = cat.idcategorie
+INNER join user prof
+on prof.iduser=c.idEnseignant;

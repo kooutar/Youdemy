@@ -44,19 +44,25 @@ class coursDocument extends cours{
         $db=database::getInstance()->getConnection();
         $courses=[];
         try{
-       $stmt=$db->prepare("SELECT * FROM  vuecours where path_vedio is null  and idEnseignant=?");
+       $stmt=$db->prepare("SELECT * FROM  vuecours where path_vedio is null and iduser=?");
        if($stmt->execute([$idEnseignant])){
          $result=$stmt->fetchALL();
          foreach($result as $row){
-            $courses[]= new coursDocument($row['idcours'],$row['titre'],$row['description'],$row['path_image'],$row['documentation']);
+            $course= new coursDocument($row['idcours'],$row['titre'],$row['description'],$row['path_image'],$row['documentation']);
+            $prof=new Enseignant($row['nom'],$row['prenom'],$row['email'],$row['role'],$row['iduser'],$row['password']);
+            $course->setProfessor($prof);
+            $categorie=new categorie($row['categorie']);
+            $course->setCategorie( $categorie);
+            $courses[]=$course;
          }
          return $courses;
        }
+   
        return [];
 
         }catch(PDOException $e)
         {
-             $e->getMessage();
+            die("Erreur SQL : " . $e->getMessage());
         }
        
     }

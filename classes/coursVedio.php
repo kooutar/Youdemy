@@ -49,11 +49,16 @@ class coursVedio extends cours
         $db=database::getInstance()->getConnection();
         $courses=[];
         try{
-       $stmt=$db->prepare("SELECT * FROM  vuecours where documentation is null and idEnseignant=? ");
+       $stmt=$db->prepare("SELECT * FROM  vuecours where documentation is null and iduser=? ");
        if($stmt->execute([$idEnseignant])){
          $result=$stmt->fetchALL();
          foreach($result as $row){
-            $courses[]= new coursVedio($row['idcours'],$row['titre'],$row['description'],$row['path_image'],$row['path_vedio']);
+            $course= new coursVedio($row['idcours'],$row['titre'],$row['description'],$row['path_image'],$row['path_vedio']);
+            $prof=new Enseignant($row['nom'],$row['prenom'],$row['email'],$row['role'],$row['iduser'],$row['password']);
+            $course->setProfessor($prof);
+            $categorie=new categorie($row['categorie']);
+            $course->setCategorie( $categorie);
+            $courses[]=$course;
          }
          return $courses;
        }
@@ -61,7 +66,7 @@ class coursVedio extends cours
 
         }catch(PDOException $e)
         {
-             $e->getMessage();
+            die("Erreur SQL : " . $e->getMessage());
         }
        
     }
