@@ -56,6 +56,19 @@ require_once 'categorie.php';
 public function setCategorie(categorie $categorie){
   $this->categorie=$categorie;
 }
-  
+  public static function afficherTousLesCours(){
+    $courses=[];
+    $db=database::getInstance()->getConnection();
+    try {
+      $stmt=$db->prepare("SELECT * FROM  vuecours ");
+      if($stmt->execute([])){
+        $result=$stmt->fetchALL();
+        return $result;
+      }
+      return[];
+    } catch (PDOException $e) {
+      die("err sql". $e->getMessage());
+    }
+  }
 
  }

@@ -1,3 +1,6 @@
+<?php 
+ require_once '../autoload.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -50,61 +53,52 @@
             
             <select class="p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
                 <option value="all">Toutes les catégories</option>
-                <option value="programmation">Programmation</option>
+                <?php 
+                  $categories=categorie::affichecategorie();
+                  foreach($categories as $categorie){
+                    ?>
+                     <option value="<?= $categorie['categorie']?>"><?= $categorie['categorie']?></option>
+                    <?php
+                  }
+
+                ?>
+                <!-- <option value="programmation">Programmation</option>
                 <option value="marketing">Marketing</option>
-                <option value="design">Design</option>
+                <option value="design">Design</option> -->
             </select>
         </div>
 
         <!-- Grille de cours -->
         <div class="grid md:grid-cols-3 gap-8">
                 <!-- Course Card 1 -->
-                <div class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <img src="../images/courses-image1.jpg" alt="course" class="w-full h-48 object-cover">
+                 <?php 
+                 $courses=cours::afficherTousLesCours();
+                 foreach($courses as $cours){
+                    ?>
+                    <div class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img src="<?=$cours['path_image']?>" alt="course" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm">Développement</span>
-                        <h3 class="text-xl font-bold mt-4">Introduction au développement web</h3>
-                        <p class="text-gray-600 mt-2">Apprenez les bases du développement web moderne</p>
+                        <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm"></span>
+                        <h3 class="text-xl font-bold mt-4"><?= $cours['titre']?></h3>
+                        <p class="text-gray-600 mt-2"><?=$cours['description']?></p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="font-bold">49.99 €</span>
+                            <!-- <span class="font-bold">49.99 €</span> -->
                             <button class="px-4 py-2 bg-[#B6FFA1] rounded-lg hover:bg-green-200">
                                 En savoir plus
                             </button>
                         </div>
                     </div>
                 </div>
+                    <?php
+                 }
+                 ?>
+                
                 
                 <!-- Course Card 2 -->
-                <div class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <img src="../images/courses-image2.jpg" alt="course" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm">Design</span>
-                        <h3 class="text-xl font-bold mt-4">Design UX/UI Avancé</h3>
-                        <p class="text-gray-600 mt-2">Maîtrisez les principes du design moderne</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="font-bold">59.99 €</span>
-                            <button class="px-4 py-2 bg-[#B6FFA1] rounded-lg hover:bg-green-200">
-                                En savoir plus
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Course Card 3 -->
-                <div class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <img src="../images/courses-image3.jpg" alt="course" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm">Marketing</span>
-                        <h3 class="text-xl font-bold mt-4">Marketing Digital</h3>
-                        <p class="text-gray-600 mt-2">Stratégies de marketing pour 2024</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="font-bold">39.99 €</span>
-                            <button class="px-4 py-2 bg-[#B6FFA1] rounded-lg hover:bg-green-200">
-                                En savoir plus
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
     </div>
     <footer class="bg-gray-800 text-white py-20">
