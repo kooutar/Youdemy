@@ -43,11 +43,11 @@ $cours=cours::getcoursById($coursId);
                     </div>
 
                     <!-- Bouton d'inscription -->
-                    <?php if(isset($_SESSION['userData']['iduser'])): ?>
+                  
                         <button class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                             S'inscrire au cours
                         </button>
-                    <?php endif; ?>
+                    
                 </div>
             </div>
         </div>
@@ -59,18 +59,23 @@ $cours=cours::getcoursById($coursId);
                 <!-- Lecteur vidéo ou contenu du cours -->
                 <div class="bg-white rounded-xl p-6 shadow-lg mb-8">
                     <h2 class="text-2xl font-bold mb-4">Contenu du cours</h2>
-                    <?php //if($course['type_content'] == 'video'): ?>
+                    <?php if($cours instanceof coursVedio ): ?>
                         <div class="aspect-w-16 aspect-h-9 mb-4">
                             <video controls class="w-full rounded-lg">
-                                <source src="../uploads/6787c4b54be5c_Enregistrement 2024-11-27 222337.mp4" type="video/mp4">
+                                <source src="<?=$cours->getvedio()?>" type="video/mp4">
                                 Votre navigateur ne supporte pas la lecture vidéo.
                             </video>
                         </div>
-                    <?php //else: ?>
+                    <?php else: ?>
                         <div class="prose max-w-none">
-                          
+                          <?php 
+                             $contenu = file_get_contents($cours->getdocumentation());
+                
+                             // Afficher le contenu dans le div
+                             echo nl2br(htmlspecialchars($contenu));
+                          ?>
                         </div>
-                    <?php //endif; ?>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Programme du cours -->
