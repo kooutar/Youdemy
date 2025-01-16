@@ -11,7 +11,7 @@ require_once 'session.php';
                 $result = $stmt->fetch();    
                 if(password_verify($password,$result['password'])){
                      Session::validateSession($result); 
-                     header('location: ../front/pageClient.php');
+                     header('location: ../front/cours.php');
                      exit();
                 }
                 else{

@@ -2,7 +2,7 @@
 require_once 'db.php';
 require_once 'Enseignant.php';
 require_once 'categorie.php';
- abstract class  cours{
+  class  cours{
   protected $idcours;
   protected $titre;
   protected $description;
@@ -35,11 +35,6 @@ require_once 'categorie.php';
             throw new Exception("Extension non autorisée pour le fichier : $imagename");
         }
   }
-
-  abstract  public static function createCours($id,$titre,$description,$image,$documentation,$vedio,$idcategorie,$idEnseignant);
- 
-  abstract  public static function getAllCours($idEnseignant);
- 
 
     public function __get($attribut) {
         
@@ -83,9 +78,46 @@ public function setCategorie(categorie $categorie){
       $stmt->bindParam(':parpage', $parpage, PDO::PARAM_INT);
       if($stmt->execute()){
         $result=$stmt->fetchALL();
-        return $result;
+        foreach($result as $row){
+          $course=new cours($row['idcours'],$row['titre'],$row['description'],$row['path_image']);
+          $prof=new Enseignant($row['nom'],$row['prenom'],$row['email'],$row['role'],$row['iduser'],$row['password']);
+          $course->setProfessor($prof);
+          $categorie=new categorie($row['categorie']);
+          $course->setCategorie( $categorie);
+          $courses[]=$course;
+        }
+        return $courses;
       }
       return[];
+    } catch (PDOException $e) {
+      die("err sql". $e->getMessage());
+    }
+  }
+
+  public static function getcoursById($coursId)  {
+    $db=database::getInstance()->getConnection();
+    try {
+      $stmt=$db->prepare("SELECT * FROM  vuecours where idcours=? ");
+      $stmt->execute([$coursId]);
+      $result=$stmt->fetch();
+      if($result['documentation']==null){
+        $course= new  coursVedio($result['idcours'],$result['titre'],$result['description'],$result['path_image'],$result['path_vedio']);
+        $prof=new Enseignant($result['nom'],$result['prenom'],$result['email'],$result['role'],$result['iduser'],$result['password']);
+        $course->setProfessor($prof);
+        $categorie=new categorie($result['categorie']);
+        $course->setCategorie( $categorie);
+        return $course;
+      }elseif($result['path_vedio']==null){
+        $course= new coursDocument($result['idcours'],$result['titre'],$result['description'],$result['path_image'],$result['documentation']);
+        $prof=new Enseignant($result['nom'],$result['prenom'],$result['email'],$result['role'],$result['iduser'],$result['password']);
+        $course->setProfessor($prof);
+        $categorie=new categorie($result['categorie']);
+        $course->setCategorie( $categorie);
+        return $course;
+      }else{
+        return false;
+      }
+
     } catch (PDOException $e) {
       die("err sql". $e->getMessage());
     }

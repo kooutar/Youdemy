@@ -1,5 +1,6 @@
 <?php 
  require_once '../autoload.php';
+ Session::ActiverSession();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,9 +23,17 @@
                     <a href="#" class="hover:text-gray-600">Cours</a>
                     <a href="#" class="hover:text-gray-600">Catégories</a>
                     <a href="#" class="hover:text-gray-600">Enseignants</a>
+                    <?php 
+                       if(isset($_SESSION['userData']['iduser'])){
+                    ?>
+                    <a href="pageClient.php">Mon compte</a>
+                     <?php
+                     }
+                    ?>
                 </div>
-
-                <div class="flex items-center space-x-4">
+                <?php if(!isset($_SESSION['userData']['iduser'])){
+                 ?>
+                 <div class="flex items-center space-x-4">
                     <button class="px-4 py-2 rounded-lg bg-white hover:bg-gray-100">
                         <a href="front/connexion.php"></a>Connexion
                     </button>
@@ -32,12 +41,14 @@
                        <a href="front/registre.php">Inscription</a> 
                     </button>
                 </div>
+                 <?php
+                }?>
+                
             </div>
         </div>
     </nav>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-8 text-gray-800">Nos Cours</h1>
-        
         <!-- Barre de recherche et filtres -->
         <div class="flex flex-col md:flex-row gap-4 mb-8">
             <div class="relative flex-1">
@@ -74,23 +85,26 @@
                   $nbrpages = ceil($total['total']/ 2);
                   $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
                  $courses=cours::afficherTousLesCours($page,2);
-                 foreach($courses as $cours){
-                    ?>
-                    <div data-category="<?= $cours['categorie']?>" class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <img src="<?=$cours['path_image']?>" alt="course" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm"><?= $cours['categorie']?></span>
-                        <h3 class="text-xl font-bold mt-4"><?= $cours['titre']?></h3>
-                        <p class="text-gray-600 mt-2"><?=$cours['description']?></p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <!-- <span class="font-bold">49.99 €</span> -->
-                            <button class="px-4 py-2 bg-[#B6FFA1] rounded-lg hover:bg-green-200">
-                                En savoir plus
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                    <?php
+                 foreach ($courses as $cours) {
+                     // Affichage des données
+                     ?>
+                     <div data-category="<?= htmlspecialchars($cours->categorie->getCategorie()) ?>" class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                         <img src="<?= htmlspecialchars($cours->image) ?>" alt="course" class="w-full h-48 object-cover">
+                         <div class="p-6">
+                             <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm"><?= htmlspecialchars($cours->categorie->getCategorie()) ?></span>
+                             <h3 class="text-xl font-bold mt-4"><?= htmlspecialchars($cours->titre) ?></h3>
+                             <p class="text-gray-600 mt-2"><?= htmlspecialchars($cours->description) ?></p>
+                             <div class="mt-4 flex justify-between items-center">
+                                 <?php if (isset($_SESSION['userData']['iduser'])) { ?>
+                                     <form action="detaille.php" method="POST">
+                                     <input type="hidden" name="idcours" value="<?= htmlspecialchars($cours->idcours) ?>">
+                                         <button class="px-4 py-2 bg-[#B6FFA1] rounded-lg hover:bg-green-200">En savoir plus</button>
+                                     </form>
+                                 <?php } ?>
+                             </div>
+                         </div>
+                     </div>
+                     <?php
                  }
                  ?>
                  
