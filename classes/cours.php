@@ -56,12 +56,32 @@ require_once 'categorie.php';
 public function setCategorie(categorie $categorie){
   $this->categorie=$categorie;
 }
-  public static function afficherTousLesCours(){
+    // public static function getTotalCours(){
+      
+    // }
+    public static function totalcours()
+    {
+        $db = Database::getInstance()->getConnection();
+        try {
+            $req = "SELECT COUNT(*) as total FROM cours";
+            $stmt = $db->prepare($req);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Erreur lors du comptage des cours : " . $e->getMessage();
+            return [];
+        }
+    }
+  public static function afficherTousLesCours($page ,$parpage){
     $courses=[];
+    $premier=($page * $parpage)-$parpage;
+
     $db=database::getInstance()->getConnection();
     try {
-      $stmt=$db->prepare("SELECT * FROM  vuecours ");
-      if($stmt->execute([])){
+      $stmt=$db->prepare("SELECT * FROM  vuecours limit :premier , :parpage ");
+      $stmt->bindParam(':premier', $premier, PDO::PARAM_INT);
+      $stmt->bindParam(':parpage', $parpage, PDO::PARAM_INT);
+      if($stmt->execute()){
         $result=$stmt->fetchALL();
         return $result;
       }

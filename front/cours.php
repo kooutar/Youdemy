@@ -54,6 +54,7 @@
             <select class="p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent">
                 <option value="all">Toutes les catégories</option>
                 <?php 
+               
                   $categories=categorie::affichecategorie();
                   foreach($categories as $categorie){
                     ?>
@@ -69,7 +70,10 @@
         <div class="grid md:grid-cols-3 gap-8">
                 <!-- Course Card 1 -->
                  <?php 
-                 $courses=cours::afficherTousLesCours();
+                  $total=cours::totalcours();
+                  $nbrpages = ceil($total['total']/ 2);
+                  $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+                 $courses=cours::afficherTousLesCours($page,2);
                  foreach($courses as $cours){
                     ?>
                     <div data-category="<?= $cours['categorie']?>" class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -89,14 +93,32 @@
                     <?php
                  }
                  ?>
-                
-                
-                <!-- Course Card 2 -->
-                
-
-                <!-- Course Card 3 -->
-                
+                 
             </div>
+
+            <div class="w-full">
+            <div class="flex justify-center py-8">
+    <ul class="flex gap-2">
+        <?php
+        for ($i = 1; $i <= $nbrpages; $i++) {
+            $activeClass = ($i == $page) 
+                ? 'bg-[#B6FFA1] text-gray-800 border-[#B6FFA1]' 
+                : 'bg-white text-gray-600 border-gray-200 hover:bg-[#B6FFA1] hover:border-[#B6FFA1] hover:text-gray-800';
+            
+            echo "<li>
+                    <a href='?page=$i' 
+                       class='flex items-center justify-center min-w-[2.5rem] h-10 px-2 
+                              border rounded-lg transition-all duration-200 
+                              $activeClass'>
+                        $i
+                    </a>
+                  </li>";
+        }
+        ?>
+    </ul>
+</div>
+   
+</div>
     </div>
     <footer class="bg-gray-800 text-white py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

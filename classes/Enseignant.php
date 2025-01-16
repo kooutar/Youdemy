@@ -3,6 +3,7 @@ require_once 'user.php';
 require_once 'session.php';
 
 class Enseignant extends user{
+    static $cours=[];
     private $status;
    
     public static  function getStatusProf($email){
@@ -59,6 +60,7 @@ class Enseignant extends user{
         if (!$result) {
             return "Erreur lors de la création du cours vidéo";
         }
+        Enseignant::$cours[]=$result;
         return $result;
     }
     if ($cours instanceof coursDocument) {
@@ -66,6 +68,7 @@ class Enseignant extends user{
         if (!$result) {
             return "Erreur lors de la création du cours document";
         }
+        Enseignant::$cours[]=$result;
         return $result;
     }
     return "Type de cours non pris en charge";
