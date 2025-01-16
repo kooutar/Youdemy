@@ -57,14 +57,11 @@
                   $categories=categorie::affichecategorie();
                   foreach($categories as $categorie){
                     ?>
-                     <option value="<?= $categorie['categorie']?>"><?= $categorie['categorie']?></option>
+                     <option data-category="<?=$categorie['categorie']?>" value="<?= $categorie['categorie']?>"><?= $categorie['categorie']?></option>
                     <?php
                   }
 
                 ?>
-                <!-- <option value="programmation">Programmation</option>
-                <option value="marketing">Marketing</option>
-                <option value="design">Design</option> -->
             </select>
         </div>
 
@@ -75,10 +72,10 @@
                  $courses=cours::afficherTousLesCours();
                  foreach($courses as $cours){
                     ?>
-                    <div class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div data-category="<?= $cours['categorie']?>" class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <img src="<?=$cours['path_image']?>" alt="course" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm"></span>
+                        <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm"><?= $cours['categorie']?></span>
                         <h3 class="text-xl font-bold mt-4"><?= $cours['titre']?></h3>
                         <p class="text-gray-600 mt-2"><?=$cours['description']?></p>
                         <div class="mt-4 flex justify-between items-center">
