@@ -56,16 +56,16 @@ class Enseignant extends user{
    public  function getstatus(){ return $this->status;}
 
 
-   public function ajouterCours(cours $cours, $idcategorie) {
+   public function ajouterCours(cours $cours) {
     if ($cours instanceof coursVedio) {
-        $result = coursVedio::createCours($cours->idcours, $cours->titre, $cours->description, null,$cours->getvedio(), $idcategorie, $this->id);
+        $result = coursVedio::createCours($cours->idcours, $cours->titre, $cours->description,$cours->image, null,$cours->getvedio(),  $cours->categorie->getCategorie(), $this->id);
         if (!$result) {
             return "Erreur lors de la création du cours vidéo";
         }
         return $result;
     }
     if ($cours instanceof coursDocument) {
-        $result = coursDocument::createCours($cours->idcours, $cours->titre, $cours->description, $cours->getdocumentation(),null, $idcategorie, $this->id);
+        $result = coursDocument::createCours($cours->idcours, $cours->titre, $cours->description,$cours->image, $cours->getdocumentation(),null, $cours->categorie->getCategorie(), $this->id);
         if (!$result) {
             return "Erreur lors de la création du cours document";
         }
@@ -73,6 +73,18 @@ class Enseignant extends user{
     }
     return "Type de cours non pris en charge";
 }
+
+public function consulterMesCours(cours $cours){
+       if($cours instanceof coursVedio){
+          return coursVedio::getAllCours($this->id);
+       }
+       if($cours instanceof coursDocument){
+        return coursDocument::getAllCours($this->id);
+       }
+}
+
+
+
 
 
    

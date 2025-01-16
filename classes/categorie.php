@@ -48,8 +48,7 @@ public static function affichecategorie(){
   }catch(PDOException $e){
       $e->getMessage();
   }
-
 }
-
+public function getCategorie(){return $this->categorie;}
 
 }

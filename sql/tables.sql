@@ -52,3 +52,9 @@ create table tag_cours(
     foreign key (idtag) references tag(idtag),
     primary key(idcours,idtag)
 );
+
+CREATE VIEW vuecours AS
+SELECT c.*, cat.categorie
+FROM cours c
+INNER JOIN categorie cat
+ON c.idcategorie = cat.idcategorie;

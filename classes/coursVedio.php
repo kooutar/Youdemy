@@ -5,9 +5,9 @@ class coursVedio extends cours
 {
     private $vedio;
 
-    public function __construct($id, $titre, $description, $vedio)
+    public function __construct($id, $titre, $description,$image, $vedio)
     {
-        parent::__construct($id, $titre, $description);
+        parent::__construct($id, $titre, $description,$image);
         $this->vedio = $vedio;
     }
 
@@ -31,19 +31,39 @@ class coursVedio extends cours
     }
 
 
-    public static function createCours($id, $titre, $description,$doc,$vedio, $idcategorie, $idEnseignant)
+    public static function createCours($id, $titre, $description,$image,$doc,$vedio, $idcategorie, $idEnseignant)
     {
         $db = database::getInstance()->getConnection();
         try {
-            $stmt = $db->prepare("INSERT into cours(titre,description,path_vedio,idcategorie,idEnseignant) 
-                              values(?,?,?,?,?)");
-            $stmt->execute([$titre, $description, $vedio, $idcategorie, $idEnseignant]);
+            $stmt = $db->prepare("INSERT into cours(titre,description,path_image,path_vedio,idcategorie,idEnseignant) 
+                              values(?,?,?,?,?,?)");
+            $stmt->execute([$titre, $description,$image, $vedio, $idcategorie, $idEnseignant]);
             $lastInsertId = $db->lastInsertId();
-            return new coursVedio($lastInsertId, $titre, $description, $vedio);
+            return new coursVedio($lastInsertId, $titre, $description,$image, $vedio);
         } catch (PDOException $th) {
             echo "Erreur PDO : " . $th->getMessage(); 
-        return false; // Retourne false en cas d'échec
+        return false; 
         }
+    }
+    public static function getAllCours($idEnseignant){
+        $db=database::getInstance()->getConnection();
+        $courses=[];
+        try{
+       $stmt=$db->prepare("SELECT * FROM  vuecours where documentation is null and idEnseignant=? ");
+       if($stmt->execute([$idEnseignant])){
+         $result=$stmt->fetchALL();
+         foreach($result as $row){
+            $courses[]= new coursVedio($row['idcours'],$row['titre'],$row['description'],$row['path_image'],$row['path_vedio']);
+         }
+         return $courses;
+       }
+       return [];
+
+        }catch(PDOException $e)
+        {
+             $e->getMessage();
+        }
+       
     }
 
     public function getvedio()

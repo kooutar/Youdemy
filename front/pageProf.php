@@ -206,12 +206,12 @@
                             <div class="flex text-sm text-gray-600">
                                 <label class="relative cursor-pointer bg-white rounded-md font-medium text-[#B6FFA1] hover:text-green-600">
                                     <span>Télécharger un fichier</span>
-                                    <input type="file" class="sr-only" name="vedio">
+                                    <input type="file" class="sr-only" name="image">
                                 </label>
                                 <p class="pl-1">ou glisser-déposer</p>
                             </div>
                             <p class="text-xs text-gray-500">
-                                MP4, MOV, AVI jusqu'à 10MB
+                                jpg, PNG, SVG jusqu'à 10MB
                             </p>
                         </div>
                     </div>
@@ -238,7 +238,7 @@
                 <!-- Champ spécifique pour les cours en présentiel -->
                 <div id="divLieu" style="display:none;">
                     <label for="lieu" class="block text-sm font-medium text-gray-700 mb-1">documenation :</label>
-                    <input type="file" id="lieu" name="lieu" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent" placeholder="ex: Paris, Salle 101">
+                    <input type="file" id="lieu" name="document" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent" placeholder="ex: Paris, Salle 101">
                 </div>
                 </div>
 

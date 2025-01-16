@@ -20,10 +20,10 @@ if(isset($_POST['connecter'])){
    $role= user::RoleMail($_POST['email']);
    echo $role;
    if($role){
-     if($role=='etudiant'){
+     if($role=='1'){
          Etudiant::login($_POST['email'],$_POST['password']);
      }
-     if($role =='Enseignant' ){
+     if($role =='2' ){
         Enseignant::login($_POST['email'],$_POST['password']);
      }else{
          admin::login($_POST['email'],$_POST['password']);
