@@ -80,6 +80,10 @@ Session::ActiverSession();
                                 </form>
                                 <form action="../traitement/traitementAdmin.php" method="post">
                                     <input type="hidden" name="idcours" value="<?= $cours->idcours ?>">
+                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
+                                    <input type="hidden" name="description" value="<?= $cours->description?>">
+                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
+                                    <input type="hidden" name="image" value="<?= $cours->image?>">
                                     <button name="RefuserCours" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                         Refuser
                                     </button>

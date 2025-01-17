@@ -174,4 +174,18 @@ class  cours
     }
 }
 
+public function refuserCours(){
+  $db = database::getInstance()->getConnection();
+  try {
+      $stmt = $db->prepare("UPDATE cours SET status = 'refuser' WHERE idcours = ?");
+      $stmt->execute([$this->idcours]);
+      $this->setStatus('refuser');
+  } catch (PDOException $th) {
+      // Log the error (if you have a logging system)
+      error_log("SQL Error: " . $th->getMessage());
+      // Return a user-friendly message or handle the error gracefully
+      return "An error occurred while updating the course status.";
+  }
+}
+
 }
