@@ -111,7 +111,6 @@
                             <td class="px-4 py-3">
                                 <img src="<?=$cours->image?>" alt="Course" class="rounded-lg w-10 h-10 object-cover">
                             </td>
-                           
                             <td class="px-4 py-3"><?= $cours->titre?></td>
                             <td class="px-4 py-3"><?= $cours->categorie->getCategorie()?></td>
                             <td class="px-4 py-3">Vidéo</td>

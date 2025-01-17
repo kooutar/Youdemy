@@ -61,12 +61,37 @@ public function setCategorie(categorie $categorie){
             $req = "SELECT COUNT(*) as total FROM cours";
             $stmt = $db->prepare($req);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
         } catch (PDOException $e) {
             echo "Erreur lors du comptage des cours : " . $e->getMessage();
             return [];
         }
     }
+
+  public static function getAllCours(){
+    $courses=[];
+    $db = Database::getInstance()->getConnection();
+    try {
+        $req = "SELECT * FROM  vuecours";
+        $stmt = $db->prepare($req);
+        if($stmt->execute()){
+          $result=$stmt->fetchALL();
+          foreach($result as $row){
+            $course=new cours($row['idcours'],$row['titre'],$row['description'],$row['path_image']);
+            $prof=new Enseignant($row['nom'],$row['prenom'],$row['email'],$row['role'],$row['iduser'],$row['password']);
+            $course->setProfessor($prof);
+            $categorie=new categorie($row['categorie']);
+            $course->setCategorie( $categorie);
+            $courses[]=$course;
+          }
+          return $courses;
+        }
+    } catch (PDOException $e) {
+        echo "Erreur lors du comptage des cours : " . $e->getMessage();
+        return [];
+    }
+  }
+   
   public static function afficherTousLesCours($page ,$parpage){
     $courses=[];
     $premier=($page * $parpage)-$parpage;

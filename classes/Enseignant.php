@@ -4,7 +4,8 @@ require_once 'session.php';
 
 class Enseignant extends user{
     static $cours=[];
-    private $status;
+   
+    
    
     public static  function getStatusProf($email){
         $db = database::getInstance()->getConnection();
@@ -25,10 +26,15 @@ class Enseignant extends user{
     public static function login($Email,$password){
         $db=database::getInstance()->getConnection();
         try{
-           $stmt=$db->prepare("SELECT * From user where email=? ");
+           $stmt=$db->prepare("SELECT * From user where email=?  ");
            if($stmt->execute([$Email])){
                $result = $stmt->fetch();
-               
+               if($result['status']=='en attente'){
+                Session::validateSession($result);
+                $_SESSION['error'] = "votre compte est  en cours de traitement !"; 
+                header('location: ../front/connexion.php');
+                exit();
+               }
                if(password_verify($password,$result['password'])){
                     Session::validateSession($result); 
                     header('location: ../front/pageProf.php');

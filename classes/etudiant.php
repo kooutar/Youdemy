@@ -8,7 +8,13 @@ require_once 'session.php';
          try{
             $stmt=$db->prepare("SELECT * From user where email=? ");
             if($stmt->execute([$Email])){
-                $result = $stmt->fetch();    
+                $result = $stmt->fetch(); 
+                if($result['EstActive']==false){
+                    Session::validateSession($result);
+                    $_SESSION['error'] = "votre compte est  Binder !"; 
+                    header('location: ../front/connexion.php');
+                    exit();
+                   }   
                 if(password_verify($password,$result['password'])){
                      Session::validateSession($result); 
                      header('location: ../front/cours.php');

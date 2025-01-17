@@ -8,7 +8,8 @@ abstract class user{
     protected $email;
     protected $password;
     protected $role;
-    function __construct($nom,$prenom,$email,$role,$id,$password=null)
+    protected $status;
+    function __construct($nom,$prenom,$email,$role,$id,$password=null,$status=null)
     {
         $this->id=$id;
         $this->nom=$nom;
@@ -16,11 +17,11 @@ abstract class user{
         $this->email=$email;
         $this->role=$role;
         $this->password=$password;
+        $this->status=$status;
        
     }
     private function setPassword($password){
      $this->password=password_hash($password,PASSWORD_BCRYPT);
-    // $this->password=$password;  
     }
     public function __get($attribut) {
         
@@ -73,14 +74,14 @@ abstract class user{
                 if ($result) {
                     return $result['role'];
                 } else {
-                    // No user found, return false or handle accordingly
+                   
                     return false;
                 }
             } else {
                 return false;
             }
         } catch (PDOException $e) {
-            // Optionally log the exception or handle the error
+          
             return false;
         }
     }
@@ -90,6 +91,16 @@ abstract class user{
         $db = database::getInstance()->getConnection();
         try{
             $stmt=$db->prepare("UPDATE user set status='en attente' where  iduser=?");
+            $stmt->execute([$iduser]);
+            
+          }catch(PDOException $e){
+  
+          }
+    }
+    private function  StatusActiveEtudiant($iduser){
+        $db = database::getInstance()->getConnection();
+        try{
+            $stmt=$db->prepare("UPDATE user set EstActive=true where  iduser=?");
             $stmt->execute([$iduser]);
             
           }catch(PDOException $e){
@@ -109,21 +120,19 @@ abstract class user{
         $user=new static($nom,$prenom,$email,$role,null,$password);
         $user->setPassword($password);
         if($role=='2'){
-         $user->insertion();
-        $user->StatusEnAttente($user->id);
-        Session::ActiverSession();
-        $_SESSION['success'] = "inscription avec success !"; 
-        header('location: ../front/connexion.php'); 
-        exit();
+            $user->insertion();
+            $user->StatusEnAttente($user->id);
+            Session::ActiverSession();
+            $_SESSION['success'] = "inscription avec success !"; 
+            header('location: ../front/connexion.php'); 
+            exit();
         }if($role=='1'){
             $user->insertion();
+            $user->StatusActiveEtudiant($user->id);
             Session::ActiverSession();
             $_SESSION['success'] = "inscription avec success !"; 
             header('location: ../front/connexion.php'); 
             exit();
         }
-       
-       
-
     }
 }

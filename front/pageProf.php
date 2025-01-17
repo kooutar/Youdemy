@@ -17,7 +17,7 @@
 
 <body class="bg-[#FFFBE6]">
     <div class="flex">
-        <!-- Sidebar -->
+  
         <aside class="w-64 min-h-screen bg-white shadow-lg">
             <div class="p-4">
                 <h2 class="text-xl font-bold text-gray-800">Dashboard Professeur</h2>
@@ -30,7 +30,7 @@
             </nav>
         </aside>
 
-        <!-- Main Content -->
+       
         <main class="flex-1 p-8">
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -290,13 +290,7 @@ function afficherChamps() {
             }
         }
 
-        // ********************************
-        // function showSection(sectionId) {
-        //     document.querySelectorAll('.section').forEach(section => {
-        //         section.classList.add('hidden');
-        //     });
-        //     document.getElementById(sectionId).classList.remove('hidden');
-        // }
+      
     </script>
    
 </body>
