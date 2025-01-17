@@ -19,11 +19,11 @@ if(isset($_POST['ajoutCours'])){
         foreach ($arraytag as $tag) {
             
             $existingTag = tag::tagNameExist($tag);
-            // print_r($existingTag);
+            
             if (!empty($existingTag)) {
 
                 tag_cours::insert_tag_cours($finalCours->idcours, $existingTag);
-                // continue;
+                
             }
            
         }

@@ -3,8 +3,6 @@ require_once '../autoload.php';
 Session::ActiverSession();
 $coursId=$_POST['idcours'];
 $cours=cours::getcoursById($coursId);
-
-// $instructor = professeur::getInstructorById($course['id_prof']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -34,19 +32,28 @@ $cours=cours::getcoursById($coursId);
                     <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm"><?=$cours->categorie->getcategorie()?></span>
                     <h1 class="text-3xl font-bold mt-4 mb-4"><?=$cours->titre?></h1>
                     <p class="text-gray-600 mb-6"><?=$cours->description?></p>
-                    <!-- <p class="text-gray-600 mb-6"><?=$id?></p> -->
+        
                     
                     <!-- Tags du cours -->
                     <div class="flex flex-wrap gap-2 mb-6">
-                        les tage
-                        
+                      
                     </div>
 
                     <!-- Bouton d'inscription -->
-                  
-                        <button class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                     <?php 
+                     $inscripton =new inscrire($coursId,$_SESSION['userData']['iduser']);
+                    if(!$inscripton->verifierEtusiantInscrireCours()){
+                     ?>
+                      <form action="../traitement/traitementEtudiant.php" method="Post">
+                          <input type="hidden" name="idetudiant" value="<?=$_SESSION['userData']['iduser']?>">
+                          <input type="hidden" name="coursId" value="<?= $coursId ?>">
+                          <button type="submit" name="inscrire" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                             S'inscrire au cours
                         </button>
+                      </form>
+                      <?php
+                      }
+                      ?>
                     
                 </div>
             </div>

@@ -53,10 +53,41 @@ create table tag_cours(
     primary key(idcours,idtag)
 );
 
-CREATE Or replace VIEW vuecours AS
-SELECT c.idcours,c.titre,c.description,c.path_image,c.documentation,c.path_vedio, cat.categorie, prof.*
-FROM cours c
-INNER JOIN categorie cat
-ON c.idcategorie = cat.idcategorie
-INNER join user prof
-on prof.iduser=c.idEnseignant;
+create table inscrire(
+  idEtudiant int not null,
+  idcours int not null,
+  foreign key (idcours) references cours(idcours),
+  FOREIGN KEY (idEtudiant) REFERENCES user(iduser)
+);
+
+CREATE OR REPLACE VIEW vuecours AS
+SELECT 
+    c.idcours,
+    c.titre,
+    c.description,
+    c.path_image,
+    c.documentation,
+    c.path_vedio,
+    cat.categorie,
+    prof.*,
+    t.idtag,
+    t.tag
+FROM 
+    cours c
+INNER JOIN 
+    categorie cat
+ON 
+    c.idcategorie = cat.idcategorie
+INNER JOIN 
+    user prof
+ON 
+    prof.iduser = c.idEnseignant
+INNER JOIN 
+    tag_cours t_c
+ON 
+    c.idcours = t_c.idcours
+INNER JOIN 
+    tag t
+ON 
+    t.idtag = t_c.idtag
+group by(c.idcours);

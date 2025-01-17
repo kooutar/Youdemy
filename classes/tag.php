@@ -31,7 +31,7 @@ class tag implements JsonSerializable{
 
           } catch (PDOException $e){
             $e->getMessage();
-            //throw $th;
+           
           }
     }
   
@@ -59,9 +59,9 @@ class tag implements JsonSerializable{
         $stmt->execute(['tagname' => $tagName]);
         $result = $stmt->fetch(); 
         if ($result) {
-          return $result['idtag']; // Retourne l'ID du tag si trouvé
+          return $result['idtag']; 
       } else {
-          return []; // Retourne null si aucun tag trouvé
+          return []; 
       }
       } catch (\PDOException $th) {
         die("errr sql".$th->getMessage());

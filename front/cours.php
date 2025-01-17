@@ -82,9 +82,9 @@
                 <!-- Course Card 1 -->
                  <?php 
                   $total=cours::totalcours();
-                  $nbrpages = ceil($total['total']/ 2);
+                  $nbrpages = ceil($total['total']/ 8);
                   $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-                 $courses=cours::afficherTousLesCours($page,2);
+                 $courses=cours::afficherTousLesCours($page,8);
                  foreach ($courses as $cours) {
                      // Affichage des données
                      ?>
