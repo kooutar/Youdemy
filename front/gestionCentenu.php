@@ -1,6 +1,7 @@
 <?php 
 require_once '../autoload.php';
 Session::ActiverSession();
+$categories=categorie::affichecategorie();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -117,15 +118,23 @@ Session::ActiverSession();
                                 <th class="text-left py-3 px-4">Actions</th>
                             </tr>
                         </thead>
+
                         <tbody>
+                            <?php 
+                           
+                            foreach($categories as $categorie){
+                            ?>
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="py-3 px-4">Programmation</td>
+                                <td class="py-3 px-4"><?= $categorie['categorie']?></td>
                                 <td class="py-3 px-4">25</td>
                                 <td class="py-3 px-4">
-                                    <button class="text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
+                                    <button value="<?=$categorie['idcategorie']?>" class="text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
                                     <button class="text-red-500 hover:text-red-700">Supprimer</button>
                                 </td>
                             </tr>
+                            <?php
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>

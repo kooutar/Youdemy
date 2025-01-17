@@ -50,5 +50,6 @@ public static function affichecategorie(){
   }
 }
 public function getCategorie(){return $this->categorie;}
+public function getIdCategorie(){return $this->idcategorie;}
 
 }

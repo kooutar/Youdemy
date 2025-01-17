@@ -4,9 +4,7 @@ require_once 'session.php';
 
 class Enseignant extends user{
     static $cours=[];
-   
     
-   
     public static  function getStatusProf($email){
         $db = database::getInstance()->getConnection();
        try {
@@ -87,6 +85,23 @@ public function consulterMesCours(cours $cours){
        if($cours instanceof coursDocument){
         return coursDocument::getAllCours($this->id);
        }
-}  
+} 
+
+public static  function  getAllProf(){
+    $prof=[];
+    $db=database::getInstance()->getConnection();
+    try {
+        $stmt=$db->prepare("SELECT * FROM user where role= 2");
+       if($stmt->execute())
+       {
+        $result = $stmt->fetchAll();
+         $prof[]=new Enseignant($result['nom'],$result['prenom'],$result['email'],$result['role'],$result['iduser'],$result['password'],$result['status']);
+       }
+       return $prof;
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+}
+
 }
 
