@@ -1,5 +1,6 @@
 <?php 
 require_once '../autoload.php';
+Session::ActiverSession();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -52,7 +53,7 @@ require_once '../autoload.php';
                                 <th class="text-left py-3 px-4">Titre</th>
                                 <th class="text-left py-3 px-4">Professeur</th>
                                 <th class="text-left py-3 px-4">Catégorie</th>
-                                
+                                <th class="text-left py-3 px-4">status</th>
                                 <th class="text-left py-3 px-4">Actions</th>
                             </tr>
                         </thead>
@@ -65,13 +66,26 @@ require_once '../autoload.php';
                                 <td class="py-3 px-4"><?=$cours->titre?></td>
                                 <td class="py-3 px-4"><?=$cours->prof->nom?></td>
                                 <td class="py-3 px-4"><?=$cours->categorie->getcategorie()?></td>
+                                <td class="py-3 px-4"><?=$cours->status?></td>
                                 <td class="py-3 px-4">
-                                    <button class="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600">
+                                    <div class="flex"> <form action="../traitement/traitementAdmin.php" method="post">
+                                    <input type="hidden" name="idcours" value="<?= $cours->idcours ?>">
+                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
+                                    <input type="hidden" name="description" value="<?= $cours->description?>">
+                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
+                                    <input type="hidden" name="image" value="<?= $cours->image?>">
+                                    <button name="accepterCours" class="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600">
                                         Accepter
                                     </button>
-                                    <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                </form>
+                                <form action="../traitement/traitementAdmin.php" method="post">
+                                    <input type="hidden" name="idcours" value="<?= $cours->idcours ?>">
+                                    <button name="RefuserCours" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                         Refuser
                                     </button>
+                                </form></div>
+                               
+                                    
                                 </td>
                             </tr>
                             <?php 
@@ -239,3 +253,21 @@ require_once '../autoload.php';
 
 </body>
 </html>
+
+<?php
+if (isset($_SESSION['success'])) {
+    $Message = $_SESSION['success'];
+    echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'success',
+                text: '$Message',
+                confirmButtonText: 'OK',
+                timer: 5000
+            });
+        </script>
+    ";
+    unset($_SESSION['success']); 
+}

@@ -33,6 +33,7 @@ CREATE TABLE cours (
     path_vedio VARCHAR(255),
     idcategorie INT NOT NULL,
     idEnseignant INT NOT NULL,
+    status ENUM('accepter', 'refuser', 'en attente') DEFAULT 'en attente',
     dateCreation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idcategorie) REFERENCES categorie(idcategorie),
     FOREIGN KEY (idEnseignant) REFERENCES user(iduser)
@@ -68,6 +69,7 @@ SELECT
     c.path_image,
     c.documentation,
     c.path_vedio,
+    c.status as statusCours,
     cat.categorie,
     prof.*,
     t.idtag,
@@ -89,5 +91,9 @@ ON
 INNER JOIN 
     tag t
 ON 
-    t.idtag = t_c.idtag
-group by(c.idcours);
+    t.idtag = t_c.idtag;
+
+
+
+ALTER TABLE cours 
+add COLUMN status ENUM('accepter', 'refuser', 'en attente') DEFAULT 'en attente';

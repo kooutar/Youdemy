@@ -16,6 +16,16 @@ if(isset($_POST['ajoutTag'])){
    foreach($arraytags as $tag){
       tag::insertTag($tag);
    }
+}
+
+if(isset($_POST['accepterCours'])){
+     $cours= new cours($_POST['idcours'],$_POST['titre'],$_POST['description'],$_POST['image']);
+     $cours->accepterCours();
+     session::ActiverSession();
+     $_SESSION['success']=" vous etes accepter le cours";
+     header('location: ../front/gestionCentenu.php');
+     exit();
+}
   
 
-}
+
