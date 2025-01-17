@@ -19,6 +19,7 @@ class tag implements JsonSerializable{
   }
 
   public function getTag(){return $this->tag;}
+
     public static function insertTag($tag){
           $db=database::getInstance()->getConnection();
           try {
@@ -50,6 +51,23 @@ class tag implements JsonSerializable{
         $e->getMessage();
       } 
     }
+
+    static function  tagNameExist($tagName) {
+      $db=database::getInstance()->getConnection();
+      try {
+        $stmt = $db->prepare("SELECT idtag FROM tag WHERE tag = :tagname");
+        $stmt->execute(['tagname' => $tagName]);
+        $result = $stmt->fetch(); 
+        if ($result) {
+          return $result['idtag']; // Retourne l'ID du tag si trouvé
+      } else {
+          return []; // Retourne null si aucun tag trouvé
+      }
+      } catch (\PDOException $th) {
+        die("errr sql".$th->getMessage());
+      }
+
+  }
 
 
 

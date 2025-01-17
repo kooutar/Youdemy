@@ -56,7 +56,7 @@ class Enseignant extends user{
 
    public function ajouterCours(cours $cours) {
     if ($cours instanceof coursVedio) {
-        $result = coursVedio::createCours($cours->idcours, $cours->titre, $cours->description,$cours->image, null,$cours->getvedio(),  $cours->categorie->getCategorie(), $this->id);
+        $result = coursVedio::createCours($cours->titre, $cours->description,$cours->image, null,$cours->getvedio(),  $cours->categorie->getCategorie(), $this->id);
         if (!$result) {
             return "Erreur lors de la création du cours vidéo";
         }

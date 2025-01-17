@@ -270,7 +270,8 @@ fetch('../traitement/fetchtag.php')
 .then(tags => {
   new Tagify(input, {
     whitelist: tags, 
-    userInput: false 
+    userInput: false ,
+    delimiters: ', '
   });
 })
 .catch(error => {

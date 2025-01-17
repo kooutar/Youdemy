@@ -31,7 +31,7 @@ class coursVedio extends cours
     }
 
 
-    public static function createCours($id, $titre, $description,$image,$doc,$vedio, $idcategorie, $idEnseignant)
+    public static function createCours($titre, $description,$image,$doc,$vedio, $idcategorie, $idEnseignant)
     {
         $db = database::getInstance()->getConnection();
         try {
