@@ -106,7 +106,7 @@ class  cours
 
     $db = database::getInstance()->getConnection();
     try {
-      $stmt = $db->prepare("SELECT * FROM  vuecours limit :premier , :parpage ");
+      $stmt = $db->prepare("SELECT * FROM  vuecours  where statusCours='accepter' limit :premier , :parpage ");
       $stmt->bindParam(':premier', $premier, PDO::PARAM_INT);
       $stmt->bindParam(':parpage', $parpage, PDO::PARAM_INT);
       if ($stmt->execute()) {
@@ -167,9 +167,9 @@ class  cours
         $stmt->execute([$this->idcours]);
         $this->setStatus('accepter');
     } catch (PDOException $th) {
-        // Log the error (if you have a logging system)
+       
         error_log("SQL Error: " . $th->getMessage());
-        // Return a user-friendly message or handle the error gracefully
+       
         return "An error occurred while updating the course status.";
     }
 }
@@ -181,9 +181,9 @@ public function refuserCours(){
       $stmt->execute([$this->idcours]);
       $this->setStatus('refuser');
   } catch (PDOException $th) {
-      // Log the error (if you have a logging system)
+     
       error_log("SQL Error: " . $th->getMessage());
-      // Return a user-friendly message or handle the error gracefully
+     
       return "An error occurred while updating the course status.";
   }
 }
