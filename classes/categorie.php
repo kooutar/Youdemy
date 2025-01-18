@@ -52,4 +52,15 @@ public static function affichecategorie(){
 public function getCategorie(){return $this->categorie;}
 public function getIdCategorie(){return $this->idcategorie;}
 
+public function  delete()  {
+  $db=database::getInstance()->getConnection();
+  try {
+  $stmt=$db->prepare("DELETE FROM categorie WHERE idcategorie=?");
+  $stmt->execute([$this->idcategorie]);
+  } catch (\PDOException $th) {
+    die($th->getMessage());
+  }
+  
+}
+
 }

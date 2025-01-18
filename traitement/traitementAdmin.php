@@ -36,4 +36,14 @@ if(isset($_POST['RefuserCours'])){
    exit();
 }
 
+if(isset($_POST['supprimerCategorie'])){
+   $categorie=new categorie($_POST['categorie'],$_POST['idcategorie']);
+   $categorie->delete();
+   session::ActiverSession();
+   $_SESSION['success']=" vous etes suppremer le categore";
+   header('location: ../front/gestionCentenu.php');
+   exit();
+   
+}
+
 

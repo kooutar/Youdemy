@@ -1,10 +1,11 @@
-<?php 
+<?php
 require_once '../autoload.php';
 Session::ActiverSession();
-$categories=categorie::affichecategorie();
+$categories = categorie::affichecategorie();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@ $categories=categorie::affichecategorie();
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 </head>
+
 <body class="bg-[#FFFBE6]">
     <div class="flex">
         <!-- Sidebar -->
@@ -60,41 +62,43 @@ $categories=categorie::affichecategorie();
                         </thead>
                         <tbody>
                             <?php
-                                  $coures= cours::getAllCours();
-                                  foreach( $coures as $cours){
+                            $coures = cours::getAllCours();
+                            foreach ($coures as $cours) {
                             ?>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="py-3 px-4"><?=$cours->titre?></td>
-                                <td class="py-3 px-4"><?=$cours->prof->nom?></td>
-                                <td class="py-3 px-4"><?=$cours->categorie->getcategorie()?></td>
-                                <td class="py-3 px-4"><?=$cours->status?></td>
-                                <td class="py-3 px-4">
-                                    <div class="flex"> <form action="../traitement/traitementAdmin.php" method="post">
-                                    <input type="hidden" name="idcours" value="<?= $cours->idcours ?>">
-                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
-                                    <input type="hidden" name="description" value="<?= $cours->description?>">
-                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
-                                    <input type="hidden" name="image" value="<?= $cours->image?>">
-                                    <button name="accepterCours" class="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600">
-                                        Accepter
-                                    </button>
-                                </form>
-                                <form action="../traitement/traitementAdmin.php" method="post">
-                                    <input type="hidden" name="idcours" value="<?= $cours->idcours ?>">
-                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
-                                    <input type="hidden" name="description" value="<?= $cours->description?>">
-                                    <input type="hidden" name="titre" value="<?= $cours->titre?>">
-                                    <input type="hidden" name="image" value="<?= $cours->image?>">
-                                    <button name="RefuserCours" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                                        Refuser
-                                    </button>
-                                </form></div>
-                               
-                                    
-                                </td>
-                            </tr>
-                            <?php 
-                              }
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-3 px-4"><?= $cours->titre ?></td>
+                                    <td class="py-3 px-4"><?= $cours->prof->nom ?></td>
+                                    <td class="py-3 px-4"><?= $cours->categorie->getcategorie() ?></td>
+                                    <td class="py-3 px-4"><?= $cours->status ?></td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex">
+                                            <form action="../traitement/traitementAdmin.php" method="post">
+                                                <input type="hidden" name="idcours" value="<?= $cours->idcours ?>">
+                                                <input type="hidden" name="titre" value="<?= $cours->titre ?>">
+                                                <input type="hidden" name="description" value="<?= $cours->description ?>">
+                                                <input type="hidden" name="titre" value="<?= $cours->titre ?>">
+                                                <input type="hidden" name="image" value="<?= $cours->image ?>">
+                                                <button name="accepterCours" class="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600">
+                                                    Accepter
+                                                </button>
+                                            </form>
+                                            <form action="../traitement/traitementAdmin.php" method="post">
+                                                <input type="hidden" name="idcours" value="<?= $cours->idcours ?>">
+                                                <input type="hidden" name="titre" value="<?= $cours->titre ?>">
+                                                <input type="hidden" name="description" value="<?= $cours->description ?>">
+                                                <input type="hidden" name="titre" value="<?= $cours->titre ?>">
+                                                <input type="hidden" name="image" value="<?= $cours->image ?>">
+                                                <button name="RefuserCours" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                                    Refuser
+                                                </button>
+                                            </form>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            <?php
+                            }
                             ?>
                         </tbody>
                     </table>
@@ -120,18 +124,27 @@ $categories=categorie::affichecategorie();
                         </thead>
 
                         <tbody>
-                            <?php 
-                           
-                            foreach($categories as $categorie){
+                            <?php
+
+                            foreach ($categories as $categorie) {
                             ?>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="py-3 px-4"><?= $categorie['categorie']?></td>
-                                <td class="py-3 px-4">25</td>
-                                <td class="py-3 px-4">
-                                    <button value="<?=$categorie['idcategorie']?>" class="text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
-                                    <button class="text-red-500 hover:text-red-700">Supprimer</button>
-                                </td>
-                            </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-3 px-4"><?= $categorie['categorie'] ?></td>
+                                    <td class="py-3 px-4">25</td>
+                                    <td class="py-3 px-4">
+                                        <div class=" flex">
+
+                                            <button class="text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
+                                            <form action="../traitement/traitementAdmin.php" method="post">
+                                                <input type="hidden" name="idcategorie" value="<?=$categorie['idcategorie']?>">
+                                                <input type="hidden" name="categorie" value="<?=$categorie['categorie']?>">
+                                                <button  name="supprimerCategorie" class="text-red-500 hover:text-red-700">Supprimer</button>
+                                            </form>
+
+                                        </div>
+
+                                    </td>
+                                </tr>
                             <?php
                             }
                             ?>
@@ -219,8 +232,8 @@ $categories=categorie::affichecategorie();
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- JS DataTables -->
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- JS DataTables -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         function showTable(tableId) {
             // Hide all tables
@@ -238,33 +251,34 @@ $categories=categorie::affichecategorie();
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
         }
-        $(document).ready(function () {
-    $('#cours').DataTable({
-      language: {
-        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json" // Traduction française
-      }
-    });
-  });
+        $(document).ready(function() {
+            $('#cours').DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json" // Traduction française
+                }
+            });
+        });
 
-  $(document).ready(function () {
-    $('#tag').DataTable({
-      language: {
-        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json" // Traduction française
-      }
-    });
-  });
+        $(document).ready(function() {
+            $('#tag').DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json" // Traduction française
+                }
+            });
+        });
 
-  $(document).ready(function () {
-    $('#categorie').DataTable({
-      language: {
-        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json" // Traduction française
-      }
-    });
-  });
+        $(document).ready(function() {
+            $('#categorie').DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json" // Traduction française
+                }
+            });
+        });
     </script>
 
 
 </body>
+
 </html>
 
 <?php
@@ -282,5 +296,5 @@ if (isset($_SESSION['success'])) {
             });
         </script>
     ";
-    unset($_SESSION['success']); 
+    unset($_SESSION['success']);
 }
