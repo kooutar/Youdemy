@@ -39,6 +39,36 @@ require_once 'session.php';
             
          }
     }
+
+    
+public static  function  getAlletudiants(){
+    $etudiants=[];
+    $db=database::getInstance()->getConnection();
+    try {
+        $stmt=$db->prepare("SELECT * FROM user where role= 1");
+       if($stmt->execute())
+       {
+        $results = $stmt->fetchAll();
+        
+        foreach ($results as $result) {
+            // Crée un nouvel objet Enseignant pour chaque ligne de résultat
+            $etudiants[] = new Enseignant(
+                $result['nom'],
+                $result['prenom'],
+                $result['email'],
+                $result['role'],
+                $result['iduser'],
+                $result['password'],
+                $result['EstActive']
+            );
+        }
+        return $etudiants;
+       }
+       return [];
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+}
  }
 
  

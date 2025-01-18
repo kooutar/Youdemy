@@ -103,23 +103,42 @@ require_once '../autoload.php';
                         </tr>
                     </thead>
                     <tbody>
+                        <?php 
+                        $etudiants=Etudiant::getAlletudiants();
+                        foreach($etudiants as $etudiant){
+                        ?>
                         <tr class="border-b hover:bg-gray-50">
                             <td class="p-3">
                                 <img src="/api/placeholder/40/40" class="w-10 h-10 rounded-full" alt="Student">
                             </td>
-                            <td class="p-3">Marie Martin</td>
-                            <td class="p-3">marie.martin@email.com</td>
+                            <td class="p-3"><?= $etudiant->nom?></td>
+                            <td class="p-3"><?= $etudiant->email?></td>
                             <td class="p-3">3</td>
                             <td class="p-3">
+                                <?php if($etudiant->status==1) {?>
                                 <span class="bg-green-100 text-green-800 px-2 py-1 rounded">Actif</span>
+                                <?php }?>
+                                <?php if($etudiant->status!=1) {?>
+                                <span class="bg-red-100 text-green-800 px-2 py-1 rounded">banir</span>
+                               <?php }?>
                             </td>
                             <td class="p-3">2024-01-15</td>
                             <td class="p-3">
-                                <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onclick="toggleBanUser(this)">
-                                    Bannir
+                            <?php if($etudiant->status!=1) {?>
+                                <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-red-600" >
+                                    Debanire
                                 </button>
+                                <?php }?>
+                                <?php if($etudiant->status==1) {?>
+                                <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" >
+                                    Banire
+                                </button>
+                                <?php }?>
                             </td>
                         </tr>
+                        <?php
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -163,12 +182,7 @@ require_once '../autoload.php';
             document.getElementById(tableId).classList.remove('hidden');
         }
 
-        function toggleBanUser(button) {
-            const isBanned = button.textContent.trim() === 'Bannir';
-            button.textContent = isBanned ? 'Débannir' : 'Bannir';
-            button.classList.toggle('bg-red-500');
-            button.classList.toggle('bg-green-500');
-        }
+       
     </script>
 </body>
 </html>
