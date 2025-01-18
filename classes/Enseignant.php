@@ -97,7 +97,6 @@ public static  function  getAllProf(){
         $results = $stmt->fetchAll();
         
         foreach ($results as $result) {
-            // Crée un nouvel objet Enseignant pour chaque ligne de résultat
             $prof[] = new Enseignant(
                 $result['nom'],
                 $result['prenom'],
@@ -115,6 +114,19 @@ public static  function  getAllProf(){
         //throw $th;
     }
 }
+
+public function updateStatus($newstatus) {
+    $db = database::getInstance()->getConnection();
+    try {
+        $stmt = $db->prepare("UPDATE user SET status = ? WHERE iduser = ?");
+        $stmt->execute([$newstatus, $this->id]);
+        return true; // Retourne true si l'opération a réussi
+    } catch (\Throwable $th) {
+        error_log("Erreur dans updateStatus : " . $th->getMessage()); // Log l'erreur
+        return false; // Retourne false en cas d'erreur
+    }
+}
+
 
 
 

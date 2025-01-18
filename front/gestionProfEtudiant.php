@@ -62,7 +62,7 @@ require_once '../autoload.php';
                         ?>
                         <tr class="border-b hover:bg-gray-50">
                             <td class="p-3">
-                                <img src="/api/placeholder/40/40" class="w-10 h-10 rounded-full" alt="Prof">
+                                <img src="../images/author-image4.jpg" class="w-10 h-10 rounded-full" alt="Prof">
                             </td>
                             <td class="p-3"><?= $prof->nom?></td>
                             <td class="p-3"><?=$prof->email?></td>
@@ -71,13 +71,26 @@ require_once '../autoload.php';
                                 <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded"><?=$prof->status?></span>
                             </td>
                             <td class="p-3">2024-01-17</td>
-                            <td class="p-3">
-                                <button class="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600">
+                            <td class="p-3 flex">
+                                <form action="../traitement/traitementAdmin.php" method="post">
+                                    <input type="hidden" name="status"  value="accepter">
+                                    <input type="hidden" name="nom" value="<?= $prof->nom?>">
+                                    <input type="hidden" name="prenom" value="<?= $prof->prenom?>">
+                                    <input type="hidden" name="email" value="<?= $prof->email?>">
+                                    <input type="hidden" name="role" value="<?= $prof->role?>">
+                                    <input type="hidden" name="iduser" value="<?= $prof->id?>">
+                                    <input type="hidden" name="password" value="<?= $prof->password?>">
+                                 
+                                    <button name="accepterProf" class="bg-green-500 text-white px-3 py-1 rounded mr-2 hover:bg-green-600">
                                     Accepter
-                                </button>
+                                  </button>
+                                </form>
+                                <form action="" method="post">
                                 <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                     Refuser
                                 </button>
+                                </form>
+                                
                             </td>
                         </tr>
                         <?php
@@ -109,7 +122,7 @@ require_once '../autoload.php';
                         ?>
                         <tr class="border-b hover:bg-gray-50">
                             <td class="p-3">
-                                <img src="/api/placeholder/40/40" class="w-10 h-10 rounded-full" alt="Student">
+                                <img src="../images/author-image4.jpg" class="w-10 h-10 rounded-full" alt="Student">
                             </td>
                             <td class="p-3"><?= $etudiant->nom?></td>
                             <td class="p-3"><?= $etudiant->email?></td>
