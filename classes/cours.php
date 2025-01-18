@@ -188,4 +188,14 @@ public function refuserCours(){
   }
 }
 
+public function deletecours(){
+  $db=database::getInstance()->getConnection();
+  try {
+    $stmt=$db->prepare("DELETE from cours where idcours=?");
+    $stmt->execute([$this->idcours]);
+  } catch (\Throwable $th) {
+    //throw $th;
+  }
+}
+
 }

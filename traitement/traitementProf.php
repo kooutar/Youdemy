@@ -55,19 +55,47 @@ if(isset($_POST['ajoutCours'])){
 
     }
 }
+
+if(isset($_POST['delete'])){
+   $cours =new cours($_POST['idcours'],$_POST['titre'],$_POST['description'],$_POST['image']);
+   $cours->deletecours();
+   Session::ActiverSession();
+       $_SESSION['success'] = "supprimer cours  avec success !"; 
+       header('location: ../front/mesCours.php');
+       exit();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //  affichage 
+
+
 
 $cours=new coursVedio(null,null,null,null,null);
 $cours->setProfessor($prof);
 $coursVedio= $prof->consulterMesCours($cours);
-// foreach($coursVedio as $cours){
-//     var_dump($cours);
-// }
+
 // ****************
 $cours=new coursDocument(null,null,null,null,null);
 $cours->setProfessor($prof);
 $coursDocument= $prof->consulterMesCours($cours);
-//  print_r($coursDocument);
 
 
 

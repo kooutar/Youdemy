@@ -1,3 +1,7 @@
+<?php 
+require_once '../autoload.php';
+session::ActiverSession();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -75,11 +79,18 @@
                             <td class="px-4 py-3">32</td>
                             <td class="px-4 py-3">2024-01-15</td>
                             <td class="px-4 py-3">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded">Actif</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded"><?= $cours->status?></span>
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 flex">
                                 <button class="text-blue-500 hover:text-blue-700 mr-2">Éditer</button>
-                                <button class="text-red-500 hover:text-red-700">Supprimer</button>
+                                <form action="../traitement/traitementProf.php" method="post">
+                                    <input type="hidden" name="idcours" value="<?=$cours->idcours?>">
+                                    <input type="hidden" name="titre" value="<?=$cours->titre?>">
+                                    <input type="hidden" name="description" value="<?=$cours->description?>">
+                                    <input type="hidden" name="image" value="<?=$cours->image?>">
+                                <button name="delete"class="text-red-500 hover:text-red-700">Supprimer</button>
+                                </form>
+                               
                             </td>
                         </tr>
                         <?php 
@@ -340,3 +351,21 @@ function afficherChampsmodale() {
     </script>
 </body>
 </html>
+
+<?php
+if (isset($_SESSION['success'])) {
+    $Message = $_SESSION['success'];
+    echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'success',
+                text: '$Message',
+                confirmButtonText: 'OK',
+                timer: 5000
+            });
+        </script>
+    ";
+    unset($_SESSION['success']);
+}
