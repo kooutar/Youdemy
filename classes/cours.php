@@ -74,7 +74,7 @@ class  cours
     }
   }
 
-  public static function getAllCours()
+  public static function getTousCours()
   {
     $courses = [];
     $db = Database::getInstance()->getConnection();

@@ -15,7 +15,6 @@ if(isset($_POST['ajoutCours'])){
         $categorie=new categorie($_POST['categorie']);
         $cours->setCategorie($categorie);
        $finalCours= $prof->ajouterCours($cours);
-        // var_dump($finalCours->idcours);
         foreach ($arraytag as $tag) {
             
             $existingTag = tag::tagNameExist($tag);
@@ -28,19 +27,30 @@ if(isset($_POST['ajoutCours'])){
            
         }
         
-        // Session::ActiverSession();
-        // $_SESSION['success'] = "ajout cours  avec success !"; 
-        // header('location: ../front/pageProf.php');
-        // exit();
+        Session::ActiverSession();
+        $_SESSION['success'] = "ajout cours  avec success !"; 
+        header('location: ../front/mesCours.php');
+        exit();
     }if($_POST['typeCours']=='document'){
         $document=coursDocument::validateDocument($_FILES['document']['name'],$_FILES['document']['tmp_name']);
        $cours= new coursDocument(null,$_POST['titre'],$_POST['description'],$image,$document);
        $categorie=new categorie($_POST['categorie']);
        $cours->setCategorie($categorie);
-       $prof->ajouterCours($cours);
+       $finalCours=$prof->ajouterCours($cours);
+       foreach ($arraytag as $tag) {
+            echo $tag."<br>";
+        $existingTag = tag::tagNameExist($tag);
+         var_dump($existingTag);
+        if (!empty($existingTag)) {
+
+            tag_cours::insert_tag_cours($finalCours->idcours, $existingTag);
+            
+        }
+       
+    }
        Session::ActiverSession();
        $_SESSION['success'] = "ajout cours  avec success !"; 
-       header('location: ../front/pageProf.php');
+       header('location: ../front/mesCours.php');
        exit();
 
     }

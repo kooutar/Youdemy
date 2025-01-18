@@ -35,13 +35,13 @@ class Enseignant extends user{
                }
                if(password_verify($password,$result['password'])){
                     Session::validateSession($result); 
-                    header('location: ../front/pageProf.php');
+                    header('location: ../front/mesCours.php');
                     exit();
                }
                else{
                    Session::ActiverSession();
                    $_SESSION['error'] = "Mot de passe incorrect !"; 
-                   header('location: ../front/connexion.php'); 
+                   header('location: ../front/mesCours.php'); 
                    exit();
                }
            }else{
@@ -94,14 +94,29 @@ public static  function  getAllProf(){
         $stmt=$db->prepare("SELECT * FROM user where role= 2");
        if($stmt->execute())
        {
-        $result = $stmt->fetchAll();
-         $prof[]=new Enseignant($result['nom'],$result['prenom'],$result['email'],$result['role'],$result['iduser'],$result['password'],$result['status']);
+        $results = $stmt->fetchAll();
+        
+        foreach ($results as $result) {
+            // Crée un nouvel objet Enseignant pour chaque ligne de résultat
+            $prof[] = new Enseignant(
+                $result['nom'],
+                $result['prenom'],
+                $result['email'],
+                $result['role'],
+                $result['iduser'],
+                $result['password'],
+                $result['status']
+            );
+        }
+        return $prof;
        }
-       return $prof;
+       return [];
     } catch (\Throwable $th) {
         //throw $th;
     }
 }
+
+
 
 }
 

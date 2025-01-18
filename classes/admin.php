@@ -11,7 +11,7 @@ class admin extends user{
 
                if(password_verify($password,$result['password'])){
                     Session::validateSession($result); 
-                    header('location: ../front/pageAdmin.php');
+                    header('location: ../front/gestionCentenu.php');
                     exit();
                }
                else{
@@ -36,18 +36,12 @@ class admin extends user{
 
    public function ajouterCategorie($categorie){
       $categorie=categorie::inserCategorie($categorie);
-        Session::ActiverSession();
-        $_SESSION['success'] = "ajoute de categorie avec success !"; 
-      header('location: ../front/pageAdmin.php');
-      exit();
+       
    }
 
    public function ajouterag($tag){
     $tag= tag::insertTag($tag);
-    Session::ActiverSession();
-    $_SESSION['success']="Ajoute de Tag avec success !";
-    header('location: ../front/pageAdmin.php');
-    exit();
+   
    }
 
 }

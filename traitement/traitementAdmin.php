@@ -5,6 +5,9 @@ $admin=new admin($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_
 if(isset($_POST['ajoutCategorie'])){
      
       $admin->ajouterCategorie($_POST['categorie']);
+      $_SESSION['success']=" vous avez ajouter categorie";
+      header('location: ../front/gestionCentenu.php');
+      exit();
     
 }
 if(isset($_POST['ajoutTag'])){
@@ -16,6 +19,9 @@ if(isset($_POST['ajoutTag'])){
    foreach($arraytags as $tag){
       tag::insertTag($tag);
    }
+   $_SESSION['success']=" vous avez ajouter les tages ";
+   header('location: ../front/gestionCentenu.php');
+   exit();
 }
 
 if(isset($_POST['accepterCours'])){

@@ -59,8 +59,17 @@ public function  delete()  {
   $stmt->execute([$this->idcategorie]);
   } catch (\PDOException $th) {
     die($th->getMessage());
+  } 
+}
+
+public function update($newCatgorie){
+  $db=database::getInstance()->getConnection();
+  try {
+      $stmt=$db->prepare("UPDATE categorie SET categorie=?");
+       $stmt->execute([$newCatgorie]);
+  } catch (\Throwable $th) {
+    //throw $th;
   }
-  
 }
 
 }

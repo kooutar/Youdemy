@@ -3,7 +3,7 @@ require_once '../autoload.php';
 Session::ActiverSession();
 $categories = categorie::affichecategorie();
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="fr">
 
 <head>
@@ -26,8 +26,8 @@ $categories = categorie::affichecategorie();
             <nav class="mt-4">
                 <a href="#stats" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Statistiques</a>
                 <a href="#content" class="block px-4 py-2 text-gray-700 bg-[#B6FFA1]">Gestion Contenu</a>
-                <a href="#teachers" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Professeurs</a>
-                <a href="#students" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Étudiants</a>
+                <a href="gestionProfEtudiant.php" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Gestion Utilisateurs</a>
+               
             </nav>
         </aside>
 
@@ -62,7 +62,7 @@ $categories = categorie::affichecategorie();
                         </thead>
                         <tbody>
                             <?php
-                            $coures = cours::getAllCours();
+                            $coures = cours::getTousCours();
                             foreach ($coures as $cours) {
                             ?>
                                 <tr class="border-b hover:bg-gray-50">
@@ -133,7 +133,7 @@ $categories = categorie::affichecategorie();
                                     <td class="py-3 px-4">25</td>
                                     <td class="py-3 px-4">
                                         <div class=" flex">
-
+                                            
                                             <button class="text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
                                             <form action="../traitement/traitementAdmin.php" method="post">
                                                 <input type="hidden" name="idcategorie" value="<?=$categorie['idcategorie']?>">
@@ -171,14 +171,22 @@ $categories = categorie::affichecategorie();
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            $tags=tag::afficheTag();
+                            foreach($tags as $tag){
+
+                            ?>
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="py-3 px-4">JavaScript</td>
+                                <td class="py-3 px-4"><?=$tag->getTag()?></td>
                                 <td class="py-3 px-4">15 cours</td>
                                 <td class="py-3 px-4">
                                     <button class="text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
                                     <button class="text-red-500 hover:text-red-700">Supprimer</button>
                                 </td>
                             </tr>
+                            <?php
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -197,12 +205,12 @@ $categories = categorie::affichecategorie();
                     </svg>
                 </button>
             </div>
-            <form class="p-6 space-y-4">
+            <form class="p-6 space-y-4" action="../traitement/traitementAdmin.php" method="POST">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nom de la catégorie</label>
-                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]">
+                    <input type="text"  name="categorie" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]">
                 </div>
-                <button type="submit" class="w-full bg-[#B6FFA1] px-4 py-2 rounded-lg hover:bg-opacity-80">
+                <button type="submit" name="ajoutCategorie" class="w-full bg-[#B6FFA1] px-4 py-2 rounded-lg hover:bg-opacity-80">
                     Ajouter
                 </button>
             </form>
@@ -210,27 +218,43 @@ $categories = categorie::affichecategorie();
     </div>
 
     <!-- Modal Tag -->
-    <div id="tagModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-lg w-full max-w-md mx-4">
+    <div  id='tagModal' class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <!-- Modal -->
+        <div class="bg-white rounded-lg w-full max-w-2xl mx-4">
+            <!-- Modal Header -->
             <div class="border-b p-4 flex justify-between items-center">
-                <h3 class="text-xl font-bold text-gray-800">Nouveau Tag</h3>
-                <button onclick="closeModal('tagModal')" class="text-gray-600 hover:text-gray-800">
+                <h3 class="text-xl font-bold text-gray-800">Ajouter un nouveau tag </h3>
+                <button class="text-gray-600 hover:text-gray-800" onclick="closeModal2()">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
-            <form class="p-6 space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nom du tag</label>
-                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]">
-                </div>
-                <button type="submit" class="w-full bg-[#B6FFA1] px-4 py-2 rounded-lg hover:bg-opacity-80">
-                    Ajouter
-                </button>
-            </form>
+                <div class="p-6">
+                <form class="space-y-6" action="../traitement/traitementAdmin.php" method="POST">
+                    <!-- Titre du cours -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            tag
+                        </label>
+                        <input 
+                            type="text"
+                            name="tags"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1] focus:border-transparent"
+                            placeholder="ex: JavaScript pour débutants"
+                            require
+                           >
+                        </div>
+                   
+                                <button type="submit" name="ajoutTag" class="px-4 py-2 bg-[#B6FFA1] text-gray-700 rounded-md hover:bg-opacity-80">
+                                    + Ajouter tags
+                                </button>
+                        
+                </form>
+            </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- JS DataTables -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -251,6 +275,13 @@ $categories = categorie::affichecategorie();
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
         }
+        var input = document.querySelector('input[name=tags]');
+
+// initialize Tagify on the above input node reference
+new Tagify(input,{
+    delimiters: ", ", // Sépare les tags avec des virgules
+    maxTags: 5,  
+})
         $(document).ready(function() {
             $('#cours').DataTable({
                 language: {

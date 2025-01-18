@@ -1,5 +1,6 @@
 <?php 
- require_once '../classes/categorie.php';
+ require_once '../autoload.php';
+ session::ActiverSession();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -65,6 +66,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php 
+                        var_dump( Enseignant::$cours);
+                        ?>
                         <tr class="border-b">
                             <td class="py-2">Python pour débutants</td>
                             <td>32</td>
@@ -295,3 +299,21 @@ function afficherChamps() {
    
 </body>
 </html>
+
+<?php
+if (isset($_SESSION['success'])) {
+    $Message = $_SESSION['success'];
+    echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'success',
+                text: '$Message',
+                confirmButtonText: 'OK',
+                timer: 5000
+            });
+        </script>
+    ";
+    unset($_SESSION['success']);
+}

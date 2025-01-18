@@ -1,3 +1,6 @@
+<?php 
+require_once '../autoload.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,7 +21,7 @@
             </div>
             <nav class="mt-4">
                 <a href="#stats" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Statistiques</a>
-                <a href="#content" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Gestion Contenu</a>
+                <a href="gestionCentenu.php" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Gestion Contenu</a>
                 <a href="#users" class="block px-4 py-2 text-gray-700 bg-[#B6FFA1]">Gestion Utilisateurs</a>
             </nav>
         </aside>
@@ -51,15 +54,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                         $arryprof=Enseignant::getAllProf();
+                         foreach($arryprof as $prof){
+                          
+                      
+                        ?>
                         <tr class="border-b hover:bg-gray-50">
                             <td class="p-3">
                                 <img src="/api/placeholder/40/40" class="w-10 h-10 rounded-full" alt="Prof">
                             </td>
-                            <td class="p-3">Jean Dupont</td>
-                            <td class="p-3">jean.dupont@email.com</td>
+                            <td class="p-3"><?= $prof->nom?></td>
+                            <td class="p-3"><?=$prof->email?></td>
                             <td class="p-3">Développement Web</td>
                             <td class="p-3">
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">En attente</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded"><?=$prof->status?></span>
                             </td>
                             <td class="p-3">2024-01-17</td>
                             <td class="p-3">
@@ -71,6 +80,9 @@
                                 </button>
                             </td>
                         </tr>
+                        <?php
+                           } 
+                        ?>
                     </tbody>
                 </table>
             </div>

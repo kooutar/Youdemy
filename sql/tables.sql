@@ -35,8 +35,8 @@ CREATE TABLE cours (
     idEnseignant INT NOT NULL,
     status ENUM('accepter', 'refuser', 'en attente') DEFAULT 'en attente',
     dateCreation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (idcategorie) REFERENCES categorie(idcategorie),
-    FOREIGN KEY (idEnseignant) REFERENCES user(iduser)
+    FOREIGN KEY (idcategorie) REFERENCES categorie(idcategorie) on delete cascade,
+    FOREIGN KEY (idEnseignant) REFERENCES user(iduser) on delete cascade
 );
 
 
@@ -49,16 +49,16 @@ create table tag(
 create table tag_cours(
     idcours int not null,
     idtag int not null,
-    foreign key (idcours) references cours(idcours),
-    foreign key (idtag) references tag(idtag),
+    foreign key (idcours) references cours(idcours) on delete cascade ,
+    foreign key (idtag) references tag(idtag) on delete cascade,
     primary key(idcours,idtag)
 );
 
 create table inscrire(
   idEtudiant int not null,
   idcours int not null,
-  foreign key (idcours) references cours(idcours),
-  FOREIGN KEY (idEtudiant) REFERENCES user(iduser)
+  foreign key (idcours) references cours(idcours) on delete cascade,
+  FOREIGN KEY (idEtudiant) REFERENCES user(iduser) on delete cascade
 );
 
 CREATE OR REPLACE VIEW vuecours AS
@@ -71,9 +71,7 @@ SELECT
     c.path_vedio,
     c.status as statusCours,
     cat.categorie,
-    prof.*,
-    t.idtag,
-    t.tag
+    prof.*
 FROM 
     cours c
 INNER JOIN 
