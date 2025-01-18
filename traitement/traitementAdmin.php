@@ -63,3 +63,14 @@ if(isset($_POST['accepterProf'])){
 }
 
 
+if(isset($_POST['refuseProf'])){
+  
+   $prof=new Enseignant($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['role'],$_POST['iduser']);
+   $prof->updateStatus($_POST['status']);
+   session::ActiverSession();
+   $_SESSION['success']=" changer le status avec success";
+   header('location: ../front/gestionProfEtudiant.php');
+   exit();
+}
+
+

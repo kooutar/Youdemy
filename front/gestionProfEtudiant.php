@@ -85,8 +85,15 @@ require_once '../autoload.php';
                                     Accepter
                                   </button>
                                 </form>
-                                <form action="" method="post">
-                                <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                <form action="../traitement/traitementAdmin.php" method="post">
+                                    <input type="hidden" name="status"  value="refuser">
+                                    <input type="hidden" name="nom" value="<?= $prof->nom?>">
+                                    <input type="hidden" name="prenom" value="<?= $prof->prenom?>">
+                                    <input type="hidden" name="email" value="<?= $prof->email?>">
+                                    <input type="hidden" name="role" value="<?= $prof->role?>">
+                                    <input type="hidden" name="iduser" value="<?= $prof->id?>">
+                                    <input type="hidden" name="password" value="<?= $prof->password?>">
+                                <button name ="refuseProf" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                     Refuser
                                 </button>
                                 </form>
