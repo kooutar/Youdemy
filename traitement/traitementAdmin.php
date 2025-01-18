@@ -73,4 +73,24 @@ if(isset($_POST['refuseProf'])){
    exit();
 }
 
+if(isset($_POST['debanire'])){
+  
+   $prof=new Etudiant($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['role'],$_POST['iduser']);
+   $prof->updateStatusEtudiant(true);
+   session::ActiverSession();
+   $_SESSION['success']=" debanirer etudiante avec success";
+   header('location: ../front/gestionProfEtudiant.php');
+   exit();
+}
+
+if(isset($_POST['banire'])){
+  
+   $prof=new Etudiant($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['role'],$_POST['iduser']);
+   $prof->updateStatusEtudiant(false);
+   session::ActiverSession();
+   $_SESSION['success']=" banirer etudiante avec success";
+   header('location: ../front/gestionProfEtudiant.php');
+   exit();
+}
+
 

@@ -69,6 +69,18 @@ public static  function  getAlletudiants(){
         //throw $th;
     }
 }
+
+public function updateStatusEtudiant($newstatus) {
+    $db = database::getInstance()->getConnection();
+    try {
+        $stmt = $db->prepare("UPDATE user SET EstActive = ? WHERE iduser = ?");
+        $stmt->execute([$newstatus, $this->id]);
+        return true; // Retourne true si l'opération a réussi
+    } catch (\Throwable $th) {
+        error_log("Erreur dans updateStatus : " . $th->getMessage()); // Log l'erreur
+        return false; // Retourne false en cas d'erreur
+    }
+}
  }
 
  

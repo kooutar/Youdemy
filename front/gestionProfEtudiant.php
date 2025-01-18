@@ -1,5 +1,6 @@
 <?php 
 require_once '../autoload.php';
+session::ActiverSession();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -145,14 +146,30 @@ require_once '../autoload.php';
                             <td class="p-3">2024-01-15</td>
                             <td class="p-3">
                             <?php if($etudiant->status!=1) {?>
-                                <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-red-600" >
+                                <form action="../traitement/traitementAdmin.php" method="post">
+                                    <input type="hidden" name="nom" value="<?= $etudiant->nom?>">
+                                    <input type="hidden" name="prenom" value="<?= $etudiant->prenom?>">
+                                    <input type="hidden" name="email" value="<?= $etudiant->email?>">
+                                    <input type="hidden" name="role" value="<?= $etudiant->role?>">
+                                    <input type="hidden" name="iduser" value="<?= $etudiant->id?>">
+                                    <input type="hidden" name="password" value="<?= $etudiant->password?>">
+                                <button name="debanire" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-red-600" >
                                     Debanire
                                 </button>
+                                </form>
                                 <?php }?>
                                 <?php if($etudiant->status==1) {?>
-                                <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" >
+                                    <form action="../traitement/traitementAdmin.php" method="post">
+                                    <input type="hidden" name="nom" value="<?= $etudiant->nom?>">
+                                    <input type="hidden" name="prenom" value="<?= $etudiant->prenom?>">
+                                    <input type="hidden" name="email" value="<?= $etudiant->email?>">
+                                    <input type="hidden" name="role" value="<?= $etudiant->role?>">
+                                    <input type="hidden" name="iduser" value="<?= $etudiant->id?>">
+                                    <input type="hidden" name="password" value="<?= $etudiant->password?>">
+                                <button name="banire" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" >
                                     Banire
                                 </button>
+                                </form>
                                 <?php }?>
                             </td>
                         </tr>
@@ -206,3 +223,20 @@ require_once '../autoload.php';
     </script>
 </body>
 </html>
+<?php
+if (isset($_SESSION['success'])) {
+    $Message = $_SESSION['success'];
+    echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'success',
+                text: '$Message',
+                confirmButtonText: 'OK',
+                timer: 5000
+            });
+        </script>
+    ";
+    unset($_SESSION['success']);
+}
