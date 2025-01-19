@@ -71,4 +71,31 @@ class coursDocument extends cours{
 
 
      public function getdocumentation(){return $this->documentation;} 
+
+     public static function totalCousDocument($idprof) {
+        $total = 0;
+        $db = database::getInstance()->getConnection();
+    
+        try {
+            // Préparer la requête
+            $stmt = $db->prepare("SELECT COUNT(*) AS total FROM cours WHERE path_vedio IS NULL AND idEnseignant = ?");
+            
+            // Exécuter la requête
+            $stmt->execute([$idprof]);
+            
+            // Récupérer le résultat
+            $result = $stmt->fetch();
+            if ($result) {
+                $total = $result['total']; // Récupérer la valeur de la colonne 'total'
+            }
+            
+        } catch (PDOException $e) {
+            // Afficher ou enregistrer l'erreur
+            error_log("Erreur lors de la récupération du total des cours vidéo : " . $e->getMessage());
+        }
+    
+        // Retourner le total
+        return $total;
+    }
+    
 }

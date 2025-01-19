@@ -24,8 +24,8 @@ class Session {
 
     }
 
- public function destroySession(){
-    session_unset();
-    session_destroy();
- }
+//  public function destroySession(){
+//     session_unset();
+//     session_destroy();
+//  }
 }

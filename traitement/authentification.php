@@ -31,3 +31,8 @@ if(isset($_POST['connecter'])){
    }
 }
 
+if(isset($_POST['deconnexion'])){
+    $etudiant = new Etudiant($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_SESSION['userData']['email'],$_SESSION['userData']['role'],$_SESSION['userData']['iduser']);
+    $etudiant->logout();
+}
+

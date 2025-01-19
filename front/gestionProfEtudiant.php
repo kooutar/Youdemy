@@ -1,6 +1,9 @@
 <?php 
 require_once '../autoload.php';
 session::ActiverSession();
+if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=3){
+    header('location: connexion.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,6 +27,9 @@ session::ActiverSession();
                 <a href="#stats" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Statistiques</a>
                 <a href="gestionCentenu.php" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Gestion Contenu</a>
                 <a href="#users" class="block px-4 py-2 text-gray-700 bg-[#B6FFA1]">Gestion Utilisateurs</a>
+                <form action="../traitement/traitementAdmin.php" method="post">
+                    <button name="deconnexion" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Déconnexion</button>
+                </form>
             </nav>
         </aside>
 

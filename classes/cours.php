@@ -208,4 +208,30 @@ public function updatecours($newtitre,$newdescription){
   }
 }
 
+public static function totalCous($idprof) {
+  $total = 0;
+  $db = database::getInstance()->getConnection();
+
+  try {
+      // Préparer la requête
+      $stmt = $db->prepare("SELECT COUNT(*) AS total FROM cours WHERE  idEnseignant = ?");
+      
+      // Exécuter la requête
+      $stmt->execute([$idprof]);
+      
+      // Récupérer le résultat
+      $result = $stmt->fetch();
+      if ($result) {
+          $total = $result['total']; // Récupérer la valeur de la colonne 'total'
+      }
+      
+  } catch (PDOException $e) {
+      // Afficher ou enregistrer l'erreur
+      error_log("Erreur lors de la récupération du total des cours vidéo : " . $e->getMessage());
+  }
+
+  // Retourner le total
+  return $total;
+}
+
 }

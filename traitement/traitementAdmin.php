@@ -113,3 +113,7 @@ if(isset($_POST['Edittag'])){
    exit();
 }
 
+if(isset($_POST['deconnexion'])){
+   $admin = new admin($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_SESSION['userData']['email'],$_SESSION['userData']['role'],$_SESSION['userData']['iduser']);
+   $admin->logout();
+}

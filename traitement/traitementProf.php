@@ -74,6 +74,10 @@ if(isset($_POST['editCours'])){
     exit();
 }
 
+if(isset($_POST['deconnexion'])){
+    $prof = new Enseignant($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_SESSION['userData']['email'],$_SESSION['userData']['role'],$_SESSION['userData']['iduser']);
+    $prof->logout();
+ }
 
 
 

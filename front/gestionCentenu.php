@@ -1,6 +1,10 @@
 <?php
+
 require_once '../autoload.php';
 Session::ActiverSession();
+if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=3){
+    header('location: connexion.php');
+}
 $categories = categorie::affichecategorie();
 ?>
 <!DOCTYPE html> 
@@ -27,6 +31,9 @@ $categories = categorie::affichecategorie();
                 <a href="#stats" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Statistiques</a>
                 <a href="#content" class="block px-4 py-2 text-gray-700 bg-[#B6FFA1]">Gestion Contenu</a>
                 <a href="gestionProfEtudiant.php" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Gestion Utilisateurs</a>
+                <form action="../traitement/traitementAdmin.php" method="post">
+                    <button name="deconnexion" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Déconnexion</button>
+                    </form>
                
             </nav>
         </aside>

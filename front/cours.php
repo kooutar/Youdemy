@@ -1,6 +1,9 @@
 <?php 
  require_once '../autoload.php';
  Session::ActiverSession();
+ if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=1){
+    header('location: connexion.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -30,6 +33,9 @@
                      <?php
                      }
                     ?>
+                      <form action="../traitement/authentification.php" method="post">
+                    <button name="deconnexion" class="hover:text-gray-600">Déconnexion</button>
+                    </form>
                 </div>
                 <?php if(!isset($_SESSION['userData']['iduser'])){
                  ?>

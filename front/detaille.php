@@ -1,6 +1,9 @@
 <?php 
 require_once '../autoload.php';
 Session::ActiverSession();
+if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=1){
+    header('location: connexion.php');
+}
 $coursId=$_POST['idcours'];
 $cours=cours::getcoursById($coursId);
 ?>
