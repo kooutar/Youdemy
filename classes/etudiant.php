@@ -81,8 +81,54 @@ public function updateStatusEtudiant($newstatus) {
         return false; // Retourne false en cas d'erreur
     }
 }
+
+public function mescours() {
+  $mescours = [];
+    $db = database::getInstance()->getConnection();
+
+    try {
+        // Préparer la requête SQL
+        $stmt = $db->prepare("
+            SELECT c.* 
+            FROM cours c 
+            INNER JOIN inscrire i ON c.idcours = i.idcours 
+            INNER JOIN user u ON u.iduser = i.idEtudiant 
+            WHERE i.idEtudiant = ?
+        ");
+
+        
+       if( $stmt->execute([$this->id])){
+        $results = $stmt->fetchAll();
+
+        
+        foreach ($results as $result) {
+            $mescours[] = new cours(
+                $result['idcours'],
+                $result['titre'],
+                $result['description'],
+                $result['path_image']
+            );
+        }
+        return $mescours;
+       }else{
+        return [];
+       }
+
+        
+
+    } catch (Throwable $th) {
+        // Log l'erreur pour le debug
+        error_log("Erreur dans mescours : " . $th->getMessage());
+        return false; // Retourne false en cas d'erreur
+    }
+
+    return $mescours; // Retourne la liste des cours
+}
+
+
  }
 
+ 
  
 
 ?>

@@ -92,6 +92,7 @@ ON
     t.idtag = t_c.idtag;
 
 
+SELECT c.* FROM cours c inner join inscrire i on c.idcours=i.idcours inner join user u on u.iduser=i.idEtudiant where i.idEtudiant=5;
 
 ALTER TABLE cours 
 add COLUMN status ENUM('accepter', 'refuser', 'en attente') DEFAULT 'en attente';

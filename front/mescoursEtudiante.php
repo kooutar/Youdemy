@@ -26,7 +26,7 @@
                     <?php 
                        if(isset($_SESSION['userData']['iduser'])){
                     ?>
-                    <a href="mescoursEtudiante.php">Mon compte</a>
+                    <a href="pageClient.php">Mon compte</a>
                      <?php
                      }
                     ?>
@@ -81,17 +81,24 @@
         <div class="grid md:grid-cols-3 gap-8">
                 <!-- Course Card 1 -->
                  <?php 
-                  $total=cours::totalcours();
-                  $nbrpages = ceil($total['total']/ 8);
-                  $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-                 $courses=cours::afficherTousLesCours($page,8);
+                 
+                 $Etudiant=new Etudiant($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_SESSION['userData']['email'],$_SESSION['userData']['role'],$_SESSION['userData']['iduser']);
+                 
+               $courses=  $Etudiant->mescours();
+               
+               if ($courses === false || empty($courses)) {
+                echo "<p>Aucun cours trouvé.</p>";
+                // var_dump($courses); // Pour afficher les résultats et vérifier ce qui est retourné
+                exit(); // Arrêter l'exécution pour déboguer
+            }
                  foreach ($courses as $cours) {
+                    // var_dump($cours);
                      // Affichage des données
                      ?>
-                     <div data-category="<?= htmlspecialchars($cours->categorie->getCategorie()) ?>" class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                     <div class="bg-[#FFFBE6] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                          <img src="<?= htmlspecialchars($cours->image) ?>" alt="course" class="w-full h-48 object-cover">
                          <div class="p-6">
-                             <span class="px-3 py-1 bg-[#B6FFA1] rounded-full text-sm"><?= htmlspecialchars($cours->categorie->getCategorie()) ?></span>
+                           
                              <h3 class="text-xl font-bold mt-4"><?= htmlspecialchars($cours->titre) ?></h3>
                              <p class="text-gray-600 mt-2"><?= htmlspecialchars($cours->description) ?></p>
                              <div class="mt-4 flex justify-between items-center">
@@ -110,29 +117,7 @@
                  
             </div>
 
-            <div class="w-full">
-            <div class="flex justify-center py-8">
-    <ul class="flex gap-2">
-        <?php
-        for ($i = 1; $i <= $nbrpages; $i++) {
-            $activeClass = ($i == $page) 
-                ? 'bg-[#B6FFA1] text-gray-800 border-[#B6FFA1]' 
-                : 'bg-white text-gray-600 border-gray-200 hover:bg-[#B6FFA1] hover:border-[#B6FFA1] hover:text-gray-800';
-            
-            echo "<li>
-                    <a href='?page=$i' 
-                       class='flex items-center justify-center min-w-[2.5rem] h-10 px-2 
-                              border rounded-lg transition-all duration-200 
-                              $activeClass'>
-                        $i
-                    </a>
-                  </li>";
-        }
-        ?>
-    </ul>
-</div>
-   
-</div>
+      
     </div>
     <footer class="bg-gray-800 text-white py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
