@@ -19,6 +19,7 @@ class tag implements JsonSerializable{
   }
 
   public function getTag(){return $this->tag;}
+  public function getId(){return $this->id;     }
 
     public static function insertTag($tag){
           $db=database::getInstance()->getConnection();
@@ -68,7 +69,17 @@ class tag implements JsonSerializable{
       }
 
   }
+   public function update($newtag){
 
+    $db=database::getInstance()->getConnection();
+    try {
+        $stmt=$db->prepare("UPDATE tag SET tag=? where idtag=? ");
+         $stmt->execute([$newtag,$this->id]);
+    } catch (\PDOException $th) {
+      die('ERR SQL'.$th->getMessage());
+    }
+
+   }
 
 
 

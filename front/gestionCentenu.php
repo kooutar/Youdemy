@@ -181,9 +181,12 @@ $categories = categorie::affichecategorie();
                             ?>
                             <tr class="border-b hover:bg-gray-50">
                                 <td class="py-3 px-4"><?=$tag->getTag()?></td>
-                                <td class="py-3 px-4">15 cours</td>
+                                <td class="py-3 px-4"><?=$tag->getId()?></td>
                                 <td class="py-3 px-4">
-                                    <button class="text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
+                                    <button
+                                    data-id="<?=$tag->getId()?>"
+                                    data-tag="<?=$tag->getTag()?>"
+                                    class="edittag text-blue-500 hover:text-blue-700 mr-3">Modifier</button>
                                     <button class="text-red-500 hover:text-red-700">Supprimer</button>
                                 </td>
                             </tr>
@@ -263,7 +266,7 @@ $categories = categorie::affichecategorie();
         <div class="bg-white rounded-lg w-full max-w-md mx-4">
             <div class="border-b p-4 flex justify-between items-center">
                 <h3 class="text-xl font-bold text-gray-800">Nouvelle Catégorie</h3>
-                <button onclick="closeModal('categorieModal')" class="text-gray-600 hover:text-gray-800">
+                <button onclick="closeModal('categorieModalEdit')" class="text-gray-600 hover:text-gray-800">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -281,6 +284,31 @@ $categories = categorie::affichecategorie();
             </form>
         </div>
     </div>
+
+    <!-- modal edit tag -->
+    <div id="tagModalEdit" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg w-full max-w-md mx-4">
+            <div class="border-b p-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Nouvelle Catégorie</h3>
+                <button onclick="closeModal('tagModalEdit')" class="text-gray-600 hover:text-gray-800">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <form class="p-6 space-y-4" action="../traitement/traitementAdmin.php" method="POST">
+                <div>
+                    <input type="text" name="idtag" id="modal-idtag">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nom de la catégorie</label>
+                    <input type="text" id="modal-tag" name="tag" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]">
+                </div>
+                <button 
+                type="submit" name="Edittag" class="w-full bg-[#B6FFA1] px-4 py-2 rounded-lg hover:bg-opacity-80">
+                    Edit
+                </button>
+            </form>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- JS DataTables -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -288,33 +316,34 @@ $categories = categorie::affichecategorie();
 
 const editButtons = document.querySelectorAll('.edit');
         const modal = document.querySelector('#categorieModalEdit');
-        // const overlay = document.querySelector('.overlay');
-        const closeButton = modal.querySelector('.close-btn');
-
-        // Références aux éléments du modal
         const modalId = document.getElementById('modal-id');
         const modalTitre = document.getElementById('modal-categorie');
-        // const modalDescription = document.getElementById('modal-description');
-        // const modalImage = document.getElementById('modal-image');
-
-        // Ajouter un écouteur d'événement à chaque bouton
         editButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Récupérer les données dynamiques
                 const id = button.getAttribute('data-id');
                 const titre = button.getAttribute('data-categorie');
-                // const description = button.getAttribute('data-description');
-                // const image = button.getAttribute('data-image');
-             console.log(id);
-                // Insérer les données dans le modal
                 modalId.value = id;
                 modalTitre.value = titre;
-                // modalDescription.value = description;
-                // modalImage.textContent = image;
-
-                // Afficher le modal et l'overlay
                 modal.classList.remove('hidden');
-                // overlay.classList.add('active');
+            
+            });
+        });
+
+        // edit tag
+
+        const editButtonstag = document.querySelectorAll('.edittag');
+        const modaltag = document.querySelector('#tagModalEdit');
+        const modalIdtag = document.getElementById('modal-idtag');
+        const modalTitretag = document.getElementById('modal-tag');
+        editButtonstag.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const titre = button.getAttribute('data-tag');
+               
+                modalIdtag.value = id;
+                modalTitretag.value = titre;
+                modaltag.classList.remove('hidden');
+            
             });
         });
         function showTable(tableId) {

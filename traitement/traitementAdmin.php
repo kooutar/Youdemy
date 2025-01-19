@@ -103,4 +103,13 @@ if(isset($_POST['EditCategorie'])){
    exit();
 }
 
+if(isset($_POST['Edittag'])){
+ 
+   $tag=new tag(null,$_POST['idtag']);
+   $tag->update($_POST['tag']);
+   session::ActiverSession();
+   $_SESSION['success']=" Edite tag avec success";
+   header('location: ../front/gestionCentenu.php');
+   exit();
+}
 
