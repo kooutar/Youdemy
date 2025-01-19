@@ -43,7 +43,13 @@ Session::ActiverSession();
                         </div>
                         <div>
                             <p class="text-sm font-medium text-gray-500">Total Étudiants</p>
-                            <h3 class="text-2xl font-bold text-gray-700">93</h3>
+                            <h3 class="text-2xl font-bold text-gray-700">
+                            <?php
+                             $prof = new Enseignant($_SESSION['userData']['nom'],$_SESSION['userData']['prenom'],$_SESSION['userData']['email'],$_SESSION['userData']['role'],$_SESSION['userData']['iduser']);
+                             $total=$prof->mesEtudiants();
+                               echo $total;
+                                ?> 
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -195,3 +201,6 @@ Session::ActiverSession();
     </script>
 </body>
 </html>
+
+
+

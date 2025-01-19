@@ -127,6 +127,23 @@ public function updateStatus($newstatus) {
     }
 }
 
+public function mesEtudiants(){
+
+    $db=database::getInstance()->getConnection();
+    try {
+        $stmt=$db->prepare("SELECT count(*) as total from inscrire i INNER join cours c on c.idcours=i.idcours where c.idEnseignant=?;");
+        $stmt->execute([$this->id]);
+        $result = $stmt->fetch();
+        if ($result) {
+            $total = $result['total']; // Récupérer la valeur de la colonne 'total'
+        }
+      return $total;  
+
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+}
+
 
 
 
