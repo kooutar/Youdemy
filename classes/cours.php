@@ -234,4 +234,65 @@ public static function totalCous($idprof) {
   return $total;
 }
 
+public static function allcours(){
+  $total = 0;
+  $db = database::getInstance()->getConnection();
+
+  try {
+      // Préparer la requête
+      $stmt = $db->prepare("SELECT COUNT(*) AS total FROM cours ");
+      
+      // Exécuter la requête
+      $stmt->execute([]);
+      
+      // Récupérer le résultat
+      $result = $stmt->fetch();
+      if ($result) {
+          $total = $result['total']; // Récupérer la valeur de la colonne 'total'
+      }
+      
+  } catch (PDOException $e) {
+      // Afficher ou enregistrer l'erreur
+      error_log("Erreur lors de la récupération du total des cours vidéo : " . $e->getMessage());
+  }
+
+  // Retourner le total
+  return $total;
+}
+
+public  static function cousPlusPopoluare(){
+  $db = database::getInstance()->getConnection();
+
+  try {
+      // Préparer la requête
+      $stmt = $db->prepare("SELECT 
+    c.idcours, 
+    c.titre, 
+    COUNT(i.idEtudiant) AS total_etudiants
+FROM 
+    cours c
+LEFT JOIN 
+    inscrire i ON c.idcours = i.idcours
+GROUP BY 
+    c.idcours
+ORDER BY 
+    total_etudiants DESC
+LIMIT 1;
+ ");
+      
+      // Exécuter la requête
+      $stmt->execute([]);
+      
+      // Récupérer le résultat
+      $result = $stmt->fetch();
+      if ($result) {
+          return $result; // Récupérer la valeur de la colonne 'total'
+      }
+      
+  } catch (PDOException $e) {
+      // Afficher ou enregistrer l'erreur
+      error_log("Erreur lors de la récupération du total des cours vidéo : " . $e->getMessage());
+  }
+}
+
 }

@@ -143,7 +143,34 @@ public function mesEtudiants(){
         die($th->getMessage());
     }
 }
+ static function top3prof(){
+    $db=database::getInstance()->getConnection();
+    try {
+        $stmt=$db->prepare("SELECT 
+    u.iduser AS idEnseignant,
+    u.nom AS nomEnseignant,
+    COUNT(c.idcours) AS total_cours
+FROM 
+    user u
+LEFT JOIN 
+    cours c ON u.iduser = c.idEnseignant
+GROUP BY 
+    u.iduser
+ORDER BY 
+    total_cours DESC
+LIMIT 3;
+");
+if($stmt->execute()){
+    $result=$stmt->fetchAll();
+    return $result;
+}
+return [];
 
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+
+ }
 
 
 
