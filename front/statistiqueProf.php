@@ -21,7 +21,7 @@ Session::ActiverSession();
             </div>
             <nav class="mt-4">
                 <a href="#dashboard" class="block px-4 py-2 text-gray-700 bg-[#B6FFA1]">Tableau de bord</a>
-                <a href="#courses" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Mes cours</a>
+                <a href="mesCours.php" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Mes cours</a>
                 <a href="#students" class="block px-4 py-2 text-gray-700 hover:bg-[#B6FFA1]">Mes étudiants</a>
                 <form action="../traitement/traitementProf.php" method="post">
                     <button name="deconnexion" class="hover:text-gray-600">Déconnexion</button>

@@ -96,3 +96,26 @@ SELECT c.* FROM cours c inner join inscrire i on c.idcours=i.idcours inner join 
 
 ALTER TABLE cours 
 add COLUMN status ENUM('accepter', 'refuser', 'en attente') DEFAULT 'en attente';
+
+
+CREATE OR REPLACE VIEW vuecours2 AS
+SELECT 
+    c.idcours,
+    c.titre,
+    c.description,
+    c.path_image,
+    c.documentation,
+    c.path_vedio,
+    c.status as statusCours,
+    cat.categorie,
+    prof.*
+FROM 
+    cours c
+INNER JOIN 
+    categorie cat
+ON 
+    c.idcategorie = cat.idcategorie
+INNER JOIN 
+    user prof
+ON 
+    prof.iduser = c.idEnseignant;

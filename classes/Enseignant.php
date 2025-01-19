@@ -135,12 +135,12 @@ public function mesEtudiants(){
         $stmt->execute([$this->id]);
         $result = $stmt->fetch();
         if ($result) {
-            $total = $result['total']; // Récupérer la valeur de la colonne 'total'
+            $total = $result['total']; 
         }
       return $total;  
 
-    } catch (\Throwable $th) {
-        //throw $th;
+    } catch (\PDOException $th) {
+        die($th->getMessage());
     }
 }
 

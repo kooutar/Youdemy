@@ -64,7 +64,7 @@ class  cours
   {
     $db = Database::getInstance()->getConnection();
     try {
-      $req = "SELECT COUNT(*) as total FROM cours";
+      $req = "SELECT COUNT(*) as total FROM cours where status='accepter'";
       $stmt = $db->prepare($req);
       $stmt->execute();
       return $stmt->fetch();
@@ -79,7 +79,7 @@ class  cours
     $courses = [];
     $db = Database::getInstance()->getConnection();
     try {
-      $req = "SELECT * FROM  vuecours";
+      $req = "SELECT * FROM  vuecours2 ";
       $stmt = $db->prepare($req);
       if ($stmt->execute()) {
         $result = $stmt->fetchALL();
@@ -106,7 +106,7 @@ class  cours
 
     $db = database::getInstance()->getConnection();
     try {
-      $stmt = $db->prepare("SELECT * FROM  vuecours  where statusCours='accepter' limit :premier , :parpage ");
+      $stmt = $db->prepare("SELECT * FROM  vuecours2  where statusCours='accepter' limit :premier , :parpage ");
       $stmt->bindParam(':premier', $premier, PDO::PARAM_INT);
       $stmt->bindParam(':parpage', $parpage, PDO::PARAM_INT);
       if ($stmt->execute()) {

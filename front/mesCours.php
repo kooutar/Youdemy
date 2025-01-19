@@ -83,7 +83,7 @@ if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=2){
                             <td class="px-4 py-3">Vidéo</td>
                             <td class="px-4 py-3">32</td>
                             <td class="px-4 py-3">2024-01-15</td>
-                            <td class="px-4 py-3">c
+                            <td class="px-4 py-3">
                                 <span class="bg-green-100 text-green-800 px-2 py-1 rounded"><?= $cours->status?></span>
                             </td>
                             <td class="px-4 py-3 flex">
@@ -145,7 +145,12 @@ if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=2){
                                 <span class="bg-green-100 text-green-800 px-2 py-1 rounded">Actif</span>
                             </td>
                             <td class="px-4 py-3 flex">
-                                <button class="text-blue-500 hover:text-blue-700 mr-2">Éditer</button>
+                                <button
+                                data_id="<?=$cours->idcours?>"
+                                    data-titre="<?=$cours->titre?>"
+                                    data-description="<?=$cours->description?>"
+                                    data-image="<?=$cours->image?>"
+                                class=" edit text-blue-500 hover:text-blue-700 mr-2">Éditer</button>
                                 <form action="../traitement/traitementProf.php" method="post">
                                     <input type="hidden" name="idcours" value="<?=$cours->idcours?>">
                                     <input type="hidden" name="titre" value="<?=$cours->titre?>">

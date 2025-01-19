@@ -49,7 +49,7 @@ class coursVedio extends cours
         $db=database::getInstance()->getConnection();
         $courses=[];
         try{
-       $stmt=$db->prepare("SELECT * FROM  vuecours where documentation is null and iduser=? ");
+       $stmt=$db->prepare("SELECT * FROM  vuecours2 where documentation is null and iduser=? ");
        if($stmt->execute([$idEnseignant])){
          $result=$stmt->fetchALL();
          foreach($result as $row){

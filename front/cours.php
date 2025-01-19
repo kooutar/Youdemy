@@ -1,9 +1,9 @@
 <?php 
  require_once '../autoload.php';
  Session::ActiverSession();
- if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=1){
-    header('location: connexion.php');
-}
+//  if(!isset($_SESSION['userData']['iduser']) || $_SESSION['userData']['role']!=1){
+//     header('location: connexion.php');
+// }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
