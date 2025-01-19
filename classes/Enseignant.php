@@ -120,12 +120,14 @@ public function updateStatus($newstatus) {
     try {
         $stmt = $db->prepare("UPDATE user SET status = ? WHERE iduser = ?");
         $stmt->execute([$newstatus, $this->id]);
-        return true; // Retourne true si l'opération a réussi
+        return true; 
     } catch (\Throwable $th) {
-        error_log("Erreur dans updateStatus : " . $th->getMessage()); // Log l'erreur
-        return false; // Retourne false en cas d'erreur
+        error_log("Erreur dans updateStatus : " . $th->getMessage()); 
+        return false; 
     }
 }
+
+
 
 
 

@@ -78,11 +78,18 @@ session::ActiverSession();
                             <td class="px-4 py-3">Vidéo</td>
                             <td class="px-4 py-3">32</td>
                             <td class="px-4 py-3">2024-01-15</td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3">c
                                 <span class="bg-green-100 text-green-800 px-2 py-1 rounded"><?= $cours->status?></span>
                             </td>
                             <td class="px-4 py-3 flex">
-                                <button class="text-blue-500 hover:text-blue-700 mr-2">Éditer</button>
+                                <button 
+                                    data_id="<?=$cours->idcours?>"
+                                    data-titre="<?=$cours->titre?>"
+                                    data-description="<?=$cours->description?>"
+                                    data-image="<?=$cours->image?>"
+                                    class="edit text-blue-500 hover:text-blue-700 mr-2">
+                                    Éditer
+                                </button>
                                 <form action="../traitement/traitementProf.php" method="post">
                                     <input type="hidden" name="idcours" value="<?=$cours->idcours?>">
                                     <input type="hidden" name="titre" value="<?=$cours->titre?>">
@@ -132,9 +139,16 @@ session::ActiverSession();
                             <td class="px-4 py-3">
                                 <span class="bg-green-100 text-green-800 px-2 py-1 rounded">Actif</span>
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 flex">
                                 <button class="text-blue-500 hover:text-blue-700 mr-2">Éditer</button>
-                                <button class="text-red-500 hover:text-red-700">Supprimer</button>
+                                <form action="../traitement/traitementProf.php" method="post">
+                                    <input type="hidden" name="idcours" value="<?=$cours->idcours?>">
+                                    <input type="hidden" name="titre" value="<?=$cours->titre?>">
+                                    <input type="hidden" name="description" value="<?=$cours->description?>">
+                                    <input type="hidden" name="image" value="<?=$cours->image?>">
+                                <button name="delete"class="text-red-500 hover:text-red-700">Supprimer</button>
+                                </form>
+                               
                             </td>
                         </tr>
                         <?php 
@@ -276,8 +290,68 @@ session::ActiverSession();
         </div>
     </div>
 </div>
+<!-- ********************************modal edit cours -->
 
+<div id="EDITModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg w-full max-w-md mx-4">
+            <div class="border-b p-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Nouvelle Catégorie</h3>
+                <button onclick="closeModal2('EDITModal')" class="text-gray-600 hover:text-gray-800">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <form class="p-6 space-y-4" action="../traitement/traitementProf.php" method="POST">
+                <div>
+                    <input type="text" id="modal-id" name="idcours">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">TItre</label>
+                    <input type="text"  id="modal-titre" name="TItre" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">description</label>
+                    <textarea id="modal-description" name="description" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B6FFA1]"></textarea>
+                </div>
+               
+                <button type="submit" name="editCours" class="w-full bg-[#B6FFA1] px-4 py-2 rounded-lg hover:bg-opacity-80">
+                    Ajouter
+                </button>
+            </form>
+        </div>
+    </div>
     <script>
+          const editButtons = document.querySelectorAll('.edit');
+        const modal = document.querySelector('#EDITModal');
+        // const overlay = document.querySelector('.overlay');
+        const closeButton = modal.querySelector('.close-btn');
+
+        // Références aux éléments du modal
+        const modalId = document.getElementById('modal-id');
+        const modalTitre = document.getElementById('modal-titre');
+        const modalDescription = document.getElementById('modal-description');
+        // const modalImage = document.getElementById('modal-image');
+
+        // Ajouter un écouteur d'événement à chaque bouton
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Récupérer les données dynamiques
+                const id = button.getAttribute('data_id');
+                const titre = button.getAttribute('data-titre');
+                const description = button.getAttribute('data-description');
+                // const image = button.getAttribute('data-image');
+             console.log(titre);
+                // Insérer les données dans le modal
+                modalId.value = id;
+                modalTitre.value = titre;
+                modalDescription.value = description;
+                // modalImage.textContent = image;
+
+                // Afficher le modal et l'overlay
+                modal.classList.remove('hidden');
+                // overlay.classList.add('active');
+            });
+        });
+
          let bteAjoutCours=document.getElementById('bteAjoutCours');
        bteAjoutCours.addEventListener('click',()=>{
         document.getElementById('modale').classList.remove('hidden');
@@ -287,6 +361,9 @@ session::ActiverSession();
         document.getElementById('modale').classList.add('hidden');
         }
 
+        function closeModal2() {
+            modal.classList.add('hidden');
+        }
         var input = document.querySelector('input[name="tags"]');
 
 fetch('../traitement/fetchtag.php')
@@ -329,25 +406,7 @@ function afficherChampsmodale() {
             videoTable.classList.remove("hidden");
             documentTable.classList.add("hidden");
         }
-    }
-   
-        // $(document).ready(function() {
-        //     $('#videoCoursesTable').DataTable({
-        //         language: {
-        //             url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
-        //         },
-        //         pageLength: 10,
-        //         responsive: true,
-        //         dom: '<"flex justify-between items-center mb-4"lf>rt<"flex justify-between items-center mt-4"ip>',
-        //         initComplete: function() {
-        //             // Custom styling for DataTables elements
-        //             $('.dataTables_length select').addClass('border rounded px-2 py-1');
-        //             $('.dataTables_filter input').addClass('border rounded px-2 py-1 ml-2');
-        //             $('.paginate_button').addClass('px-3 py-1 mx-1 rounded hover:bg-[#B6FFA1]');
-        //         }
-        //     });
-
-        // });
+    }    
     </script>
 </body>
 </html>

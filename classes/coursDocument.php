@@ -40,6 +40,8 @@ class coursDocument extends cours{
            $th->getMessage();
         }
     }
+
+    
     public static function getAllCours($idEnseignant){
         $db=database::getInstance()->getConnection();
         $courses=[];

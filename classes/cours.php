@@ -198,4 +198,14 @@ public function deletecours(){
   }
 }
 
+public function updatecours($newtitre,$newdescription){
+  $db=database::getInstance()->getConnection();
+  try{
+      $stmt=$db->prepare("UPDATE cours set titre=? , description=? where idcours=?");
+      $stmt->execute([$newtitre,$newdescription,$this->idcours]);
+  }catch(PDOException $e){
+    die("err sql". $e->getMessage());
+  }
+}
+
 }

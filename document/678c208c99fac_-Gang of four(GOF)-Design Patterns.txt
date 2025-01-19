@@ -1,0 +1,63 @@
+-Gang of four(GOF)->Design Patterns: Elements of Reusable Object-Oriented Software
+->23
+
+
+->  Laravel Eloquent or  Query Builder.
+-> MVC (Model-View-Controller) or MVVM (Model-View-ViewModel)-MVT
+
+
+-Architectural Patterns
+
+
+
+
+
+
+->static Methods:
+Les méthodes static sont associées à la classe elle-même, pas à une instance (objet) spécifique de la classe.
+
+->static Properties:
+Les propriétés static appartiennent à la classe, pas aux objets
+
+->$self:
+fait référence à la classe elle-même et est utilisé pour accéder aux propriétés et méthodes static.
+
+->$this :
+fait référence à l'instance actuelle de la classe (l'objet).
+
+
+
+
+//------------------------------------------example code pour singleton
+
+
+<?php
+class DatabaseConnection {
+    private static $instance = null;
+    private $connection;
+
+    private function __construct() {
+        $this->connection = new mysqli("localhost", "user", "password", "database");
+    }
+
+    public static function getInstance() {
+        if (self::$instance == null) {
+            self::$instance = new DatabaseConnection();
+        }
+        return self::$instance;
+    }
+
+    public function getConnection() {
+        return $this->connection;
+    }
+
+    private function __clone() {}
+}
+
+$db1 = DatabaseConnection::getInstance();
+$conn1 = $db1->getConnection();
+
+//le meme conn1
+$db2 = DatabaseConnection::getInstance();
+$conn2 = $db2->getConnection();
+

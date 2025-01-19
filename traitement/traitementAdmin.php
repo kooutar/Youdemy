@@ -93,4 +93,14 @@ if(isset($_POST['banire'])){
    exit();
 }
 
+if(isset($_POST['EditCategorie'])){
+  
+   $categorie=new categorie(null,$_POST['idcategorie']);
+   $categorie->update($_POST['categorie']);
+   session::ActiverSession();
+   $_SESSION['success']=" Edite categorie avec success";
+   header('location: ../front/gestionCentenu.php');
+   exit();
+}
+
 

@@ -65,10 +65,10 @@ public function  delete()  {
 public function update($newCatgorie){
   $db=database::getInstance()->getConnection();
   try {
-      $stmt=$db->prepare("UPDATE categorie SET categorie=?");
-       $stmt->execute([$newCatgorie]);
-  } catch (\Throwable $th) {
-    //throw $th;
+      $stmt=$db->prepare("UPDATE categorie SET categorie=? where idcategorie=? ");
+       $stmt->execute([$newCatgorie,$this->idcategorie]);
+  } catch (\PDOException $th) {
+    die('ERR SQL'.$th->getMessage());
   }
 }
 

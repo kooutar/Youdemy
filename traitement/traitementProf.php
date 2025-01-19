@@ -65,6 +65,15 @@ if(isset($_POST['delete'])){
        exit();
 }
 
+if(isset($_POST['editCours'])){
+    $cours =new cours($_POST['idcours'],null,null,null);
+    $cours->updatecours($_POST['TItre'],$_POST['description']);
+    Session::ActiverSession();
+    $_SESSION['success'] = "update cours  avec success !"; 
+    header('location: ../front/mesCours.php');
+    exit();
+}
+
 
 
 
