@@ -131,7 +131,7 @@ class  cours
   {
     $db = database::getInstance()->getConnection();
     try {
-      $stmt = $db->prepare("SELECT * FROM  vuecours where idcours=? ");
+      $stmt = $db->prepare("SELECT * FROM  vuecours2 where idcours=? ");
       $stmt->execute([$coursId]);
       $result = $stmt->fetch();
       if ($result['documentation'] == null) {
