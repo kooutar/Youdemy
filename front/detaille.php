@@ -39,7 +39,17 @@ $cours=cours::getcoursById($coursId);
                     
                     <!-- Tags du cours -->
                     <div class="flex flex-wrap gap-2 mb-6">
-                      
+                    <?php 
+                    $coursactuelle= new cours($cours->idcours,$cours->titre,$cours->description,$cours->image);
+                    $tags=$coursactuelle->gettagCour();
+                    if(!$tags){echo "pas de tag";}
+                    foreach ($tags as $tag){
+                    ?>
+                          <h1> <?=$tag->getTag();?></h1> 
+                 <?php
+                    }
+                    ?>
+                   
                     </div>
 
                     <!-- Bouton d'inscription -->

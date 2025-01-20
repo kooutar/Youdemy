@@ -23,7 +23,7 @@
                 
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="hover:text-gray-600">Accueil</a>
-                    <a href="#" class="hover:text-gray-600">Cours</a>
+                    <a href="cours.php" class="hover:text-gray-600">Cours</a>
                     <a href="#" class="hover:text-gray-600">Catégories</a>
                     <a href="#" class="hover:text-gray-600">Enseignants</a>
                   
@@ -43,7 +43,7 @@
                  ?>
                  <div class="flex items-center space-x-4">
                     <button class="px-4 py-2 rounded-lg bg-white hover:bg-gray-100">
-                        <a href="front/connexion.php"></a>Connexion
+                        <a href="front/connexion.php">Connexion</a>
                     </button>
                     <button class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">
                        <a href="front/registre.php">Inscription</a> 

@@ -22,7 +22,7 @@
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="hover:text-gray-600">Accueil</a>
+                    <a href="../index.php" class="hover:text-gray-600">Accueil</a>
                     <a href="#" class="hover:text-gray-600">Cours</a>
                     <a href="#" class="hover:text-gray-600">Catégories</a>
                     <a href="#" class="hover:text-gray-600">Enseignants</a>
@@ -30,21 +30,22 @@
                        if(isset($_SESSION['userData']['iduser'])){
                     ?>
                     <a href="mescoursEtudiante.php">Mon compte</a>
+                    <form action="../traitement/authentification.php" method="post">
+                    <button name="deconnexion" class="hover:text-gray-600">Déconnexion</button>
+                    </form>
                      <?php
                      }
                     ?>
-                      <form action="../traitement/authentification.php" method="post">
-                    <button name="deconnexion" class="hover:text-gray-600">Déconnexion</button>
-                    </form>
+                     
                 </div>
                 <?php if(!isset($_SESSION['userData']['iduser'])){
                  ?>
                  <div class="flex items-center space-x-4">
                     <button class="px-4 py-2 rounded-lg bg-white hover:bg-gray-100">
-                        <a href="front/connexion.php"></a>Connexion
+                        <a href="connexion.php">Connexion</a>
                     </button>
                     <button class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">
-                       <a href="front/registre.php">Inscription</a> 
+                       <a href="registre.php">Inscription</a> 
                     </button>
                 </div>
                  <?php

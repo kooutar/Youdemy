@@ -1,4 +1,7 @@
 <?php
+
+use LDAP\Result;
+
 require_once 'db.php';
 require_once 'Enseignant.php';
 require_once 'categorie.php';
@@ -292,6 +295,31 @@ LIMIT 1;
   } catch (PDOException $e) {
       // Afficher ou enregistrer l'erreur
       error_log("Erreur lors de la récupération du total des cours vidéo : " . $e->getMessage());
+  }
+}
+
+
+public function gettagCour(){
+  $tags=[];
+  $db=database::getInstance()->getConnection();
+  try{
+ $req="SELECT t.* 
+        from tag t
+        inner join tag_cours t_c
+        on t.idtag=t_c.idtag
+        where t_c.idcours=?";
+  $stmt=$db->prepare($req);
+   if($stmt->execute([$this->idcours])){
+      $results=$stmt->fetchAll();
+      foreach($results as $result){
+         $tag=new tag($result['tag'],$result['idtag']);
+         $tags[]=$tag;
+      }
+      return $tags;
+   }
+   return [];
+  }catch(PDOException $e){
+    die($e->getMessage());
   }
 }
 
